@@ -47,7 +47,7 @@ img{
 h1{
     color: navajowhite;
     font-weight: bolder;
-    text-decoration: underline;
+    text-decoration:underline;
+    text-decoration-thickness: 5px;
     text-decoration-color: darkred;
-    outline-color: darkred;
 }

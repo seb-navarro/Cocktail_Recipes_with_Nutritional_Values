@@ -1,4 +1,4 @@
-const apiKey = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+const CocktailApiKey = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
 
         document.getElementById('searchButton').addEventListener('click', () => {
             const query = document.getElementById('search').value.trim();
@@ -7,7 +7,7 @@ const apiKey = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
                 return;
             }
 
-            fetch(`${apiKey}${query}`)
+            fetch(`${CocktailApiKey}${query}`)
                 .then(response => response.json())
                 .then(data => {
                     const results = data.drinks || [];

@@ -1,0 +1,14 @@
+.card{
+    background-color:navajowhite;
+    margin-top: 5%;
+    border-color: darkred;
+    border-width: 5px;
+    border-style:groove;
+}
+
+img{
+    margin: 10%;
+    border-color:darkred;
+    border-width: 5px;
+    border-style: groove;
+}

@@ -1,0 +1,21 @@
+.card{
+    background-color:navajowhite;
+    margin-top: 5%;
+    border-color: darkred;
+    border-width: 5px;
+    border-style:groove;
+}
+
+img{
+    margin: 5%;
+    border-color:darkred;
+    border-width: 5px;
+    border-style: groove;
+    /* height: 30rem;
+    width: 20vw; */
+    overflow: hidden;
+    max-height: 350px;
+    max-width: 250px;
+    min-height: 350px;
+    min-width: 150px;
+}

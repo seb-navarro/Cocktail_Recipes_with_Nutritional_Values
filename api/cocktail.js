@@ -21,6 +21,7 @@ const CocktailApiKey = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s
                             <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}">
                             <h2>${drink.strDrink}</h2>
                             <p>${drink.strInstructions}</p>
+                            <a href="ingredients.html?cocktail=${drink.idDrink}" class="btn btn-dark mb-1" target="_blank">More info</a>
                         `;
                         resultsContainer.appendChild(card);
                     });

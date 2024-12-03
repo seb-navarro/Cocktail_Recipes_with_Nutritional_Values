@@ -1,13 +1,9 @@
-.card{
-    background-color:navajowhite;
-    margin-top: 5%;
-    border-color: darkred;
-    border-width: 5px;
-    border-style:groove;
+body{
+    font-family: monospace;
 }
 
 img{
-    margin: 5%;
+    margin: 10%;
     border-color:darkred;
     border-width: 5px;
     border-style: groove;
@@ -18,4 +14,20 @@ img{
     max-width: 250px;
     min-height: 350px;
     min-width: 150px;
+}
+
+.card{
+    background-color:navajowhite;
+    margin-top: 5%;
+    border-color: darkred;
+    border-width: 5px;
+    border-style:groove;
+}
+
+h1{
+    color: navajowhite;
+    font-weight: bolder;
+    text-decoration:underline;
+    text-decoration-thickness: 5px;
+    text-decoration-color: darkred;
 }

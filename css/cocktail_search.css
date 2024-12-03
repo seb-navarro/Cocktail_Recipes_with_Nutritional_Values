@@ -17,6 +17,14 @@ img{
     border-style: groove;
 }
 
+h1{
+    color: navajowhite;
+    font-weight: bolder;
+    text-decoration:underline;
+    text-decoration-thickness: 5px;
+    text-decoration-color: darkred;
+}
+
 #search{
     margin-top: 2%;
     color: darkred;
@@ -35,19 +43,3 @@ img{
     border-width: 2px;
 }
 
-#search{
-    margin-top: 2%;
-    color: darkred;
-    font-weight: bolder;
-    background-color: navajowhite;
-    border-color: darkred;
-    border-width: 2px;
-}
-
-h1{
-    color: navajowhite;
-    font-weight: bolder;
-    text-decoration: underline;
-    text-decoration-color: darkred;
-    outline-color: darkred;
-}

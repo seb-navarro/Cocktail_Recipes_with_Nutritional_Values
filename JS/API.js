@@ -16,6 +16,7 @@ const CocktailApiKey = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s
                     results.forEach(drink => {
                         const card = document.createElement('div');
                         card.classList.add('card');
+                        card.classList.add('col-md-4');
                         card.innerHTML = `
                             <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}">
                             <h2>${drink.strDrink}</h2>

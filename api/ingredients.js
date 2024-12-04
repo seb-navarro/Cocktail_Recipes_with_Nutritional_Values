@@ -44,6 +44,8 @@ fetch(`${cocktailLookup}${cocktailId}`)
             for (let i = 0; i < ingredientsArr.length; i++) {
                 createCards(nutrionIxURL, ingredientsArr[i])
             }
+        
+        // resultsContainer.appendChild(card);
 
         });
     })
@@ -74,60 +76,37 @@ function createCards(url, ingredient) {
 
             return foods.map(function (food) {
 
-                const card = createNode('div');
-                card.classList.add('card');
-                card.classList.add('col-md-4');
-                // card.innerHTML = `
-                //     <img class="" src="${food.photo.highres}" alt="${food.food_name}">
-                //     <h2>${food.food_name}</h2>
-                //     <p>${food.serving_unit}</p>
-                // `;
-                card.innerHTML = `
-                    <img class="" src="sample.jpg" alt="${food.food_name}">
-                    <h2>${food.food_name}</h2>
-                    <p>${food.serving_unit}</p>
-                `;
-                // resultsContainer.appendChild(card);
+                let card = createNode('div'),
+                    cardBody = createNode('div'),
+                    img = createNode('img'),
+                    header = createNode('h2'),
+                    paragraph = createNode('p'),
+                    aLink = createNode('a');
 
+                
+                img.setAttribute('class', 'card-img-top');
+                img.src = food.photo.highres;
+                
+                header.setAttribute('class', 'card-title');
+                header.innerHTML = `${food.food_name}`;
+                
+                paragraph.setAttribute('class', 'card-text');
+                paragraph.innerHTML = `${food.serving_unit}`;
 
-                // // let li = createNode('li'),
-                // let img = createNode('img'),
-                //     p = createNode('p'),
-                //     h5 = createNode('h5');
+                cardBody.setAttribute('class', 'card-body');
 
-                // let card = createNode('div'),
-                //     cardBody = createNode('div')
-                //     // column = createNode('div')
-                //     ;
+                card.setAttribute('class', 'card col-md-4 align-items-center justify-content-center');
+                card.setAttribute('style', 'width: 18rem;');
+                
+                
+                append(cardBody, header);
+                append(cardBody, paragraph);
+                append(cardBody, aLink);
 
-                // img.src = food.photo.highres;
-                // // img.src = food.photo.thumb;
-                // h5.innerHTML = `${food.food_name}`;
-                // p.innerHTML = `${food.serving_unit}`;
-
-
-                // img.setAttribute('class', 'card-img-top');
-                // img.setAttribute('style', 'width: 18rem;')
-                // h5.setAttribute('class', 'card-title');
-                // p.setAttribute('class', 'card-text');
-
-                // card.setAttribute('class', 'card');
-                // card.setAttribute('class', 'col-md-4');
-
-                // card.setAttribute('style', 'width: 18rem;');
-                // cardBody.setAttribute('class', 'card-body');
-                // // column.setAttribute('class', 'col-3');
-
-
-                // append(cardBody, h5);
-                // append(cardBody, p);
-                // append(card, img);
-                // append(card, cardBody);
-                // // append(column, card);
-                // // append(ingredientsRow, column);
-
+                append(card, img);
+                append(card, cardBody);
+                
                 append(ingredientsRow, card);
-
             })
         })
         .catch(function (error) {

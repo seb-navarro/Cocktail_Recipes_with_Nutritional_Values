@@ -37,7 +37,7 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
 
             ingredientsArr.forEach(ingredient => {
                 const card = document.createElement('div');
-                card.classList.add('card', 'col-md-4');
+                card.classList.add('card', 'col');
                 const measureText = ingredient === 'Salt' 
                     ? 'Garnish' 
                     : drink[`strMeasure${ingredientsArr.indexOf(ingredient) + 1}`] || '';

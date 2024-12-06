@@ -34,15 +34,15 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
         const results = data.drinks || [];
         const resultsContainer = document.getElementById('results');
         resultsContainer.innerHTML = '';
-        
+
 
         results.forEach(drink => {
             const card = document.createElement('div');
             card.classList.add('card', 'col');
             card.innerHTML = `
                 <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}">
-                <h2 class='title'>${drink.strDrink}</h2>
-                <p>Total Nutrition List</p>
+                <h2 class="title d-flex justify-content-center align-items-center">${drink.strDrink}</h2>
+                <p class="d-flex justify-content-center align-items-center">Total Nutrition List</p>
             `;
             resultsContainer.appendChild(card);
 
@@ -59,20 +59,19 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
 
             ingredientsArr.forEach(ingredient => {
                 const card = document.createElement('div');
-                card.classList.add('card', 'col');
-                const measureText = ingredient === 'Salt' 
-                    ? 'Garnish' 
+                card.classList.add('card', 'col-3');
+                const measureText = ingredient === 'Salt'
+                    ? 'Garnish'
 
                     : drink[`strMeasure${ingredientsArr.indexOf(ingredient) + 1}`] || '';
 
                 card.innerHTML = `
                     <img src="${cocktailImageURL}${ingredient}-Medium.png" alt="${ingredient}">
-                    <h4 class="title">${ingredient}</h4>
-                    <h5>${measureText}</h5>
-
-           
+                    <h4 class="title d-flex justify-content-center align-items-center">${ingredient}</h4>
+                    <h5 class="d-flex justify-content-center align-items-center">${measureText}</h5>
+                    <h6 class="d-flex justify-content-center align-items-center"><em>(1oz = 28.35g)</em></h6>
                 `;
-                // incre();
+                
                 listIngredientSpecs(nutritionIxURL, ingredient, appId2, appKey2, card);
 
                 ingredientsContainer.appendChild(card);
@@ -114,6 +113,7 @@ function listIngredientSpecs(url, ingredient, appId, appKey, card) {
             foods.forEach(food => {
                 const specs_div = createNode('div');
                 const specs_ul = createNode('ul');
+                const desc_li = createNode('li');
                 const calories_li = createNode('li');
                 const fat_li = createNode('li');
                 const sodium_li = createNode('li');
@@ -129,9 +129,10 @@ function listIngredientSpecs(url, ingredient, appId, appKey, card) {
                 const protein_span = createNode('span');
 
 
-                specs_div.setAttribute('class', 'mx-5');
+                specs_div.setAttribute('class', 'mx-3');
                 specs_ul.setAttribute('class', 'list-group');
 
+                desc_li.setAttribute('class', 'list-group-item list-group-item-action list-group-item-warning d-flex justify-content-between align-items-center');
                 calories_li.setAttribute('class', 'list-group-item list-group-item-action list-group-item-warning d-flex justify-content-between align-items-center');
                 fat_li.setAttribute('class', 'list-group-item list-group-item-action list-group-item-warning d-flex justify-content-between align-items-center');
                 sodium_li.setAttribute('class', 'list-group-item list-group-item-action list-group-item-warning d-flex justify-content-between align-items-center');
@@ -161,7 +162,7 @@ function listIngredientSpecs(url, ingredient, appId, appKey, card) {
                 sugars_span.innerHTML = food.nf_sugars + 'g';
                 protein_span.innerHTML = food.nf_protein + 'g';
 
-
+                desc_li.innerHTML = "1oz is equal to:";
                 calories_li.innerHTML = "Calories";
                 fat_li.innerHTML = "Total Fat";
                 sodium_li.innerHTML = "Sodium";
@@ -176,6 +177,7 @@ function listIngredientSpecs(url, ingredient, appId, appKey, card) {
                 append(sugars_li, sugars_span);
                 append(protein_li, protein_span);
 
+                append(specs_ul, desc_li);
                 append(specs_ul, calories_li);
                 append(specs_ul, fat_li);
                 append(specs_ul, sodium_li);
@@ -197,12 +199,6 @@ function listIngredientSpecs(url, ingredient, appId, appKey, card) {
 }
 
 
-function incre() {
-    total_caloriesValue += Number("2");
-    total_fatValue += Number("2");
-    total_sodiumValue += Number("2");
-    total_carbsValue += Number("2");
-    total_sugarsValue += Number("2");
-    total_proteinValue += Number("2");
-    // Number(
+function calc1ozEquivalent() {
+    // fhwqeoifewfewq
 }

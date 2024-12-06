@@ -12,6 +12,7 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
         const results = data.drinks || [];
         const resultsContainer = document.getElementById('results');
         resultsContainer.innerHTML = '';
+        
 
         results.forEach(drink => {
             const card = document.createElement('div');
@@ -19,13 +20,17 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
             card.innerHTML = `
                 <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}">
                 <h2 id='cocktailtitle'>${drink.strDrink}</h2>
-                <p>${drink.strInstructions}</p>
+                <p> Total Nutrition List</p>
             `;
             resultsContainer.appendChild(card);
 
             const ingredientsArrTemp = Array.from({ length: 15 }, (_, i) => drink[`strIngredient${i + 1}`]);
             const ingredientsArr = ingredientsArrTemp.filter(ingredient => ingredient);
             console.log("Ingredients Array:", ingredientsArr);
+
+            const instrP = document.getElementById('instrutions');
+            instrP.innerHTML = drink.strInstructions
+
 
             const ingredientsContainer = document.getElementById('ingredients');
             ingredientsContainer.innerHTML = '';

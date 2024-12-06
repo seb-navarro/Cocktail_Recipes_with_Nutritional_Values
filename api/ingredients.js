@@ -1,14 +1,16 @@
-const cocktailIngredientURL = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i='
-const cocktailImageURL = 'https://www.thecocktaildb.com/images/ingredients/'
+const cocktailIngredientURL = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
+const cocktailImageURL = 'https://www.thecocktaildb.com/images/ingredients/';
 let searchString = document.URL.split('?cocktail=');
-const cocktailId = searchString[1]
+const cocktailId = searchString[1];
 
 
-const nutritionIxURL = "https://trackapi.nutritionix.com/v2/natural/nutrients"
-const appId1 = "877e0602"
-const appKey1 = "9c96f922fd03f229782ebd80f468e923"
-const appId2 = "b7b5026c"
-const appKey2 = "41069590f031cbec6925acafe29900ad"
+const nutritionIxURL = "https://trackapi.nutritionix.com/v2/natural/nutrients";
+const appId1 = "877e0602";
+const appKey1 = "9c96f922fd03f229782ebd80f468e923";
+const appId2 = "b7b5026c";
+const appKey2 = "41069590f031cbec6925acafe29900ad";
+const appId3 = "cca115e6";
+const appKey3 = "ca8dbac9a61a187ee8dedb2446908fd1";
 
 let total_caloriesValue = 0,
     total_fatValue = 0,
@@ -72,7 +74,7 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
                     <h6 class="d-flex justify-content-center align-items-center"><em>(1oz = 28.35g)</em></h6>
                 `;
                 
-                listIngredientSpecs(nutritionIxURL, ingredient, appId2, appKey2, card);
+                listIngredientSpecs(nutritionIxURL, ingredient, appId3, appKey3, card);
 
                 ingredientsContainer.appendChild(card);
             });
@@ -154,13 +156,29 @@ function listIngredientSpecs(url, ingredient, appId, appKey, card) {
                 total_sugarsValue += Number(food.nf_sugars);
                 total_proteinValue += Number(food.nf_protein);
 
+                serving_amount = food.serving_weight_grams;
 
-                calories_span.innerHTML = food.nf_calories + 'g';
-                fat_span.innerHTML = food.nf_total_fat + 'g';
-                sodium_span.innerHTML = food.nf_sodium + 'g';
-                carbs_span.innerHTML = food.nf_total_carbohydrate + 'g';
-                sugars_span.innerHTML = food.nf_sugars + 'g';
-                protein_span.innerHTML = food.nf_protein + 'g';
+                conversion_rate = 28.35 / serving_amount;
+
+                console.log(conversion_rate);
+
+
+                calories_span.innerHTML = (food.nf_calories * conversion_rate).toFixed(2);
+                fat_span.innerHTML = (food.nf_total_fat * conversion_rate).toFixed(2) + 'g';
+                sodium_span.innerHTML = (food.nf_sodium * conversion_rate).toFixed(2) + 'g';
+                carbs_span.innerHTML = (food.nf_total_carbohydrate * conversion_rate).toFixed(2) + 'g';
+                sugars_span.innerHTML = (food.nf_sugars * conversion_rate).toFixed(2) + 'g';
+                protein_span.innerHTML = (food.nf_protein * conversion_rate).toFixed(2) + 'g';
+
+                
+
+                // calories_span.innerHTML = food.nf_calories;
+                // fat_span.innerHTML = food.nf_total_fat;
+                // sodium_span.innerHTML = food.nf_sodium;
+                // carbs_span.innerHTML = food.nf_total_carbohydrate;
+                // sugars_span.innerHTML = food.nf_sugars;
+                // protein_span.innerHTML = food.nf_protein;
+
 
                 desc_li.innerHTML = "1oz is equal to:";
                 calories_li.innerHTML = "Calories";

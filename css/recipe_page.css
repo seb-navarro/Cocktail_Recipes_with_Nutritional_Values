@@ -4,10 +4,11 @@ body{
 
 .card{
     background-color:navajowhite;
-    margin-top: 5%;
     border-color: darkred;
     border-width: 5px;
     border-style:groove;
+    margin: 10px;
+    padding: 10px;
 }
 
 img{
@@ -23,4 +24,17 @@ h1{
     text-decoration:underline;
     text-decoration-thickness: 5px;
     text-decoration-color: darkred;
+}
+
+h2{
+    color: navajowhite;
+    font-weight: bolder;
+}
+
+h5{
+    color: darkred;
+}
+
+#cocktailtitle{
+    color: darkred;
 }

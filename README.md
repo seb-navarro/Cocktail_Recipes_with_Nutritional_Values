@@ -9,3 +9,13 @@ Conversion Factor (CF) = ARG / (NutrionIX Serving Weight in Grams)
 
 ## Repeated on every nutrition value used:
 (Any NutritionIX Nutrition Value for Specific Ingredient) x CF = Final Nutrition Value for Ounces Amount Initially Displayed in Recipe.
+
+
+## Nutritional Factors used
+Weight
+Calories
+Fat
+Sodium
+Carbohydrate
+Sugars
+Protein

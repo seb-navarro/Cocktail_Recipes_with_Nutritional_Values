@@ -15,10 +15,10 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
 
         results.forEach(drink => {
             const card = document.createElement('div');
-            card.classList.add('card', 'col-md-4');
+            card.classList.add('card', 'col');
             card.innerHTML = `
                 <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}">
-                <h2>${drink.strDrink}</h2>
+                <h2 id='cocktailtitle'>${drink.strDrink}</h2>
                 <p>${drink.strInstructions}</p>
             `;
             resultsContainer.appendChild(card);

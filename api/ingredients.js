@@ -3,9 +3,10 @@ var searchString = document.URL.split('?cocktail=');
 cocktailId = searchString[1]
 
 
-const nutrionIxURL = "https://trackapi.nutritionix.com/v2/natural/nutrients"
-const appId = "877e0602"
-const appKey = "9c96f922fd03f229782ebd80f468e923"
+// const nutrionIxURL = "https://trackapi.nutritionix.com/v2/natural/nutrients"
+// const appId = "877e0602"
+// const appKey = "9c96f922fd03f229782ebd80f468e923"
+const cocktailIngredientURL = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i='
 const ingredientsRow = document.getElementById('ingredients');
 
 
@@ -42,7 +43,7 @@ fetch(`${cocktailLookup}${cocktailId}`)
             console.log("Ingredients Array:", ingredientsArr);
 
             ingredientsArr.forEach(ingredient => {
-                createCards(nutrionIxURL, ingredient);
+                createCards(cocktailIngredientURL, ingredient);
             });
         });
     })
@@ -52,17 +53,9 @@ fetch(`${cocktailLookup}${cocktailId}`)
     });
 
 function createCards(url, ingredient) {
-    fetch(url, {
-        method: "POST",
-        body: JSON.stringify({ query: ingredient }),
-        headers: {
-            "Content-type": "application/json; charset=UTF-8",
-            "x-app-id": appId,
-            "x-app-key": appKey
-        }
-    })
+    fetch(`${cocktailIngredientURL}${cocktailLookup}&i=${ingredient}`)
         .then(resp => {
-            if (!resp.ok) throw new Error(`Nutritionix API Error: ${resp.statusText}`);
+            if (!resp.ok) throw new Error(`API Error: ${resp.statusText}`);
             return resp.json();
         })
         .then(data => {
@@ -80,10 +73,10 @@ function createCards(url, ingredient) {
                 const paragraph = createNode('p');
 
                 img.setAttribute('class', 'card-img-top');
-                img.src = food.photo.highres || food.photo.thumb || "";
-                header.innerHTML = food.food_name || "Unknown";
-                paragraph.innerHTML = food.serving_unit || "No info";
-
+                img.setAttribute('src', food.image);
+                header.textContent = food.strIngredient1;
+                header.textContent = food.strMeasure1;
+                paragraph.textContent = `Calories: ${food.nf_calories}`;
                 append(cardBody, header);
                 append(cardBody, paragraph);
                 append(card, img);

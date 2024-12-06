@@ -10,6 +10,13 @@ const appKey1 = "9c96f922fd03f229782ebd80f468e923"
 const appId2 = "b7b5026c"
 const appKey2 = "41069590f031cbec6925acafe29900ad"
 
+let total_caloriesValue = 0,
+    total_fatValue = 0,
+    total_sodiumValue = 0,
+    total_carbsValue = 0,
+    total_sugarsValue = 0,
+    total_proteinValue = 0;
+
 function createNode(element) {
     return document.createElement(element);
 }
@@ -52,28 +59,31 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
                     ? 'Garnish'
                     : drink[`strMeasure${ingredientsArr.indexOf(ingredient) + 1}`] || '';
 
-
-
-
-
                 card.innerHTML = `
                     <img src="${cocktailImageURL}${ingredient}-Medium.png" alt="${ingredient}">
                     <h3>${ingredient}</h3>
                     <h4>${measureText}</h4>
                     
                 `;
-                
-                specs_div = createCards(nutritionIxURL, ingredient, appId2, appKey2, card);
-                
+                // incre();
+                listIngredientSpecs(nutritionIxURL, ingredient, appId2, appKey2, card);
+
                 ingredientsContainer.appendChild(card);
             });
 
         });
+
+        // console.log('total cal: ' + total_caloriesValue);
+        // console.log('total fat: ' + total_fatValue);
+        // console.log('total sod: ' + total_sodiumValue);
+        // console.log('total carb: ' + total_carbsValue);
+        // console.log('total sug: ' + total_sugarsValue);
+        // console.log('total pro: ' + total_proteinValue);
     });
 
 
 
-function createCards(url, ingredient, appId, appKey, card) {
+function listIngredientSpecs(url, ingredient, appId, appKey, card) {
     fetch(url, {
         method: "POST",
         body: JSON.stringify({ query: ingredient }),
@@ -129,12 +139,21 @@ function createCards(url, ingredient, appId, appKey, card) {
                 sugars_span.setAttribute('class', 'badge text-bg-secondary rounded-pill');
                 protein_span.setAttribute('class', 'badge text-bg-secondary rounded-pill');
 
-                calories_span.innerHTML = food.nf_calories;
-                fat_span.innerHTML = food.nf_total_fat;
-                sodium_span.innerHTML = food.nf_sodium;
-                carbs_span.innerHTML = food.nf_total_carbohydrate;
-                sugars_span.innerHTML = food.nf_sugars;
-                protein_span.innerHTML = food.nf_protein;
+                total_caloriesValue += Number(food.nf_calories);
+                total_fatValue += Number(food.nf_total_fat);
+                total_sodiumValue += Number(food.nf_sodium);
+                total_carbsValue += Number(food.nf_total_carbohydrate);
+                total_sugarsValue += Number(food.nf_sugars);
+                total_proteinValue += Number(food.nf_protein);
+
+
+                calories_span.innerHTML = food.nf_calories + 'g';
+                fat_span.innerHTML = food.nf_total_fat + 'g';
+                sodium_span.innerHTML = food.nf_sodium + 'g';
+                carbs_span.innerHTML = food.nf_total_carbohydrate + 'g';
+                sugars_span.innerHTML = food.nf_sugars + 'g';
+                protein_span.innerHTML = food.nf_protein + 'g';
+
 
                 calories_li.innerHTML = "Calories";
                 fat_li.innerHTML = "Total Fat";
@@ -162,11 +181,21 @@ function createCards(url, ingredient, appId, appKey, card) {
                 card.appendChild(specs_div);
             });
 
-return specs_div;
-
         })
         .catch(error => {
             console.error("Nutritionix API Error:", error);
+            console.log("Ingredient: " + ingredient);
             // alert(`An error occurred while fetching data for ingredient: ${ingredient}`);
         });
+}
+
+
+function incre() {
+    total_caloriesValue += Number("2");
+    total_fatValue += Number("2");
+    total_sodiumValue += Number("2");
+    total_carbsValue += Number("2");
+    total_sugarsValue += Number("2");
+    total_proteinValue += Number("2");
+    // Number(
 }

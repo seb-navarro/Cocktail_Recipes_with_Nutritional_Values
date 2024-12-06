@@ -28,7 +28,15 @@ fetch(`${cocktailLookup}${cocktailId}`)
         resultsContainer.innerHTML = '';
         results.forEach(drink => {
 
-
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.classList.add('col-md-4');
+            card.innerHTML = `
+                <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}">
+                <h2>${drink.strDrink}</h2>
+                <p>${drink.strInstructions}</p>
+            `;
+            resultsContainer.appendChild(card);
             ingredientsArrTemp = [drink.strIngredient1, drink.strIngredient2, drink.strIngredient3, drink.strIngredient4, drink.strIngredient5, drink.strIngredient6, drink.strIngredient7, drink.strIngredient8, drink.strIngredient9, drink.strIngredient10, drink.strIngredient11, drink.strIngredient12, drink.strIngredient13, drink.strIngredient14, drink.strIngredient15];
             ingredientsArr = []
             for (let i = 0; i < ingredientsArrTemp.length; i++) {

@@ -9,6 +9,8 @@ const appId1 = "877e0602"
 const appKey1 = "9c96f922fd03f229782ebd80f468e923"
 const appId2 = "b7b5026c"
 const appKey2 = "41069590f031cbec6925acafe29900ad"
+const appId3 = "cca115e6"
+const appKey3 = "ca8dbac9a61a187ee8dedb2446908fd1"
 
 let total_caloriesValue = 0,
     total_fatValue = 0,
@@ -72,7 +74,7 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
                     <h6 class="d-flex justify-content-center align-items-center"><em>(1oz = 28.35g)</em></h6>
                 `;
                 
-                listIngredientSpecs(nutritionIxURL, ingredient, appId2, appKey2, card);
+                listIngredientSpecs(nutritionIxURL, ingredient, appId3, appKey3, card);
 
                 ingredientsContainer.appendChild(card);
             });

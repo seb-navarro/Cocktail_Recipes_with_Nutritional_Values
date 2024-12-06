@@ -15,12 +15,31 @@
 </head>
 
 <body class="bg-dark text-white">
-    <div class="container text-center m-5">
-        <h1>Ingredients Information</h1>
+    <div class="container m-5">
+        <div class="row text-center">
+            <h1>Ingredients Information</h1>
+        </div>
+        
+        <div class="row g-3">
+            <h2>Cocktail</h2>
+        </div>
+        <div class="card">
+            <div class="row">
+                <div class="col-4" id="results">
 
-        <div class="row g-3" id="results"></div>
-
-        <div id="ingredients" class="row g-2 pt-5 justify-content-center mx-auto">
+                </div>
+                <div class="col-8">
+                    <div class="card-body">
+                        <h5 class="card-title">Nutrition</h5>
+                        <p class="card-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae aliquid voluptatem dolor natus accusantium minima debitis ullam commodi. Asperiores recusandae reiciendis quis error in illo. Fuga odio aut a ratione!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <h2>Ingredients</h2>
+        </div>
+        <div id="ingredients" class="row">
         </div>
 
         <script src="api/ingredients.js"></script>

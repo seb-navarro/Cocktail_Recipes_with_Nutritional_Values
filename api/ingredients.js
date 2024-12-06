@@ -1,24 +1,9 @@
-const cocktailLookup = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=";
-var searchString = document.URL.split('?cocktail=');
-cocktailId = searchString[1]
-
-
-// const nutrionIxURL = "https://trackapi.nutritionix.com/v2/natural/nutrients"
-// const appId = "877e0602"
-// const appKey = "9c96f922fd03f229782ebd80f468e923"
 const cocktailIngredientURL = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i='
-const ingredientsRow = document.getElementById('ingredients');
+const cocktailImageURL = 'https://www.thecocktaildb.com/images/ingredients/'
+let searchString = document.URL.split('?cocktail=');
+const cocktailId = searchString[1]
 
-
-function createNode(element) {
-    return document.createElement(element);
-}
-
-function append(parent, el) {
-    return parent.appendChild(el);
-}
-
-fetch(`${cocktailLookup}${cocktailId}`)
+fetch(`${cocktailIngredientURL}${cocktailId}`)
     .then(response => {
         if (!response.ok) throw new Error(`Cocktail API Error: ${response.statusText}`);
         return response.json();
@@ -42,51 +27,18 @@ fetch(`${cocktailLookup}${cocktailId}`)
             const ingredientsArr = ingredientsArrTemp.filter(ingredient => ingredient);
             console.log("Ingredients Array:", ingredientsArr);
 
+            const ingredientsContainer = document.getElementById('ingredients');
+            ingredientsContainer.innerHTML = '';
+
             ingredientsArr.forEach(ingredient => {
-                createCards(cocktailIngredientURL, ingredient);
+                const card = document.createElement('div');
+                card.classList.add('card', 'col-md-4');
+                card.innerHTML = `
+                <img src="${cocktailImageURL}${ingredient}-Medium.png" alt="${ingredient}">
+                <h3>${ingredient}</h3>
+                <h4>${drink[`strMeasure${ingredientsArr.indexOf(ingredient) + 1}`]}</h4>
+                `;
+                ingredientsContainer.appendChild(card);
             });
         });
     })
-    .catch(error => {
-        console.error("Cocktail API Fetch Error:", error);
-        alert('An error occurred while searching for the cocktail.');
-    });
-
-function createCards(url, ingredient) {
-    fetch(`${cocktailIngredientURL}${cocktailLookup}&i=${ingredient}`)
-        .then(resp => {
-            if (!resp.ok) throw new Error(`API Error: ${resp.statusText}`);
-            return resp.json();
-        })
-        .then(data => {
-            const foods = data.foods || [];
-            if (!foods.length) {
-                console.warn(`No foods found for ingredient: ${ingredient}`);
-                return;
-            }
-
-            foods.forEach(food => {
-                const card = createNode('div');
-                const cardBody = createNode('div');
-                const img = createNode('img');
-                const header = createNode('h2');
-                const paragraph = createNode('p');
-
-                img.setAttribute('class', 'card-img-top');
-                img.setAttribute('src', food.image);
-                header.textContent = food.strIngredient1;
-                header.textContent = food.strMeasure1;
-                paragraph.textContent = `Calories: ${food.nf_calories}`;
-                append(cardBody, header);
-                append(cardBody, paragraph);
-                append(card, img);
-                append(card, cardBody);
-
-                ingredientsRow.appendChild(card);
-            });
-        })
-        .catch(error => {
-            console.error("Nutritionix API Error:", error);
-            alert(`An error occurred while fetching data for ingredient: ${ingredient}`);
-        });
-}

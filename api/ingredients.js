@@ -19,8 +19,8 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
             card.classList.add('card', 'col');
             card.innerHTML = `
                 <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}">
-                <h2 id='cocktailtitle'>${drink.strDrink}</h2>
-                <p> Total Nutrition List</p>
+                <h2 class='title'>${drink.strDrink}</h2>
+                <p>Total Nutrition List</p>
             `;
             resultsContainer.appendChild(card);
 
@@ -44,8 +44,8 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
             
                 card.innerHTML = `
                     <img src="${cocktailImageURL}${ingredient}-Medium.png" alt="${ingredient}">
-                    <h3>${ingredient}</h3>
-                    <h4>${measureText}</h4>
+                    <h4 class="title">${ingredient}</h4>
+                    <h5>${measureText}</h5>
                 `;
             
                 ingredientsContainer.appendChild(card);

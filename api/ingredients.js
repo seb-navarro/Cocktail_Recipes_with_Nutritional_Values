@@ -27,14 +27,15 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
         const results = data.drinks || [];
         const resultsContainer = document.getElementById('results');
         resultsContainer.innerHTML = '';
+        
 
         results.forEach(drink => {
             const card = document.createElement('div');
             card.classList.add('card', 'col');
             card.innerHTML = `
                 <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}">
-                <h2 id='cocktailtitle'>${drink.strDrink}</h2>
-                <p>${drink.strInstructions}</p>
+                <h2 class='title'>${drink.strDrink}</h2>
+                <p>Total Nutrition List</p>
             `;
             resultsContainer.appendChild(card);
 
@@ -42,14 +43,19 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
             const ingredientsArr = ingredientsArrTemp.filter(ingredient => ingredient);
             console.log("Ingredients Array:", ingredientsArr);
 
+            const instrP = document.getElementById('instrutions');
+            instrP.innerHTML = drink.strInstructions
+
+
             const ingredientsContainer = document.getElementById('ingredients');
             ingredientsContainer.innerHTML = '';
 
             ingredientsArr.forEach(ingredient => {
                 const card = document.createElement('div');
-                card.classList.add('card', 'col-md-4');
-                const measureText = ingredient === 'Salt'
-                    ? 'Garnish'
+                card.classList.add('card', 'col');
+                const measureText = ingredient === 'Salt' 
+                    ? 'Garnish' 
+
                     : drink[`strMeasure${ingredientsArr.indexOf(ingredient) + 1}`] || '';
 
 
@@ -58,9 +64,10 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
 
                 card.innerHTML = `
                     <img src="${cocktailImageURL}${ingredient}-Medium.png" alt="${ingredient}">
-                    <h3>${ingredient}</h3>
-                    <h4>${measureText}</h4>
-                    
+                    <h4 class="title">${ingredient}</h4>
+                    <h5>${measureText}</h5>
+
+           
                 `;
                 
                 specs_div = createCards(nutritionIxURL, ingredient, appId2, appKey2, card);

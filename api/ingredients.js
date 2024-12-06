@@ -189,7 +189,17 @@ function listIngredientSpecs(url, ingredient, appId, appKey, card) {
 
                 card.appendChild(specs_div);
             });
-
+            // Display total values after fetching all ingredient data
+            const totalContainer = document.getElementById('total-nutrition');
+            totalContainer.innerHTML = `
+                <h3>Total Nutrition Values</h3>
+                <p>Calories: ${total_caloriesValue}g</p>
+                <p>Total Fat: ${total_fatValue}g</p>
+                <p>Sodium: ${total_sodiumValue}g</p>
+                <p>Total Carbohydrates: ${total_carbsValue}g</p>
+                <p>Sugars: ${total_sugarsValue}g</p>
+                <p>Protein: ${total_proteinValue}g</p>
+            `;
         })
         .catch(error => {
             console.error("Nutritionix API Error:", error);

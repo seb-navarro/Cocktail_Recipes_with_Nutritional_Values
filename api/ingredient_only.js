@@ -76,6 +76,7 @@ fetch(`${ingredientURL}${ingredientName}`)
                 relatedCocktailsContainer.innerHTML = `<p>Error fetching related cocktails. Please try again later.</p>`;
             });
     })
+    
     .catch(error => {
         console.error('Error fetching ingredient data:', error);
         resultsContainer.innerHTML = `<p>Error fetching ingredient details. Please try again later.</p>`;

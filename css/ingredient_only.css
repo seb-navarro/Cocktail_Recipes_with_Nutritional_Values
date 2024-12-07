@@ -1,20 +1,38 @@
+
 body {
     font-family: monospace;
-    background-color: #343a40; /* Matches bg-dark */
-    color: white; /* Matches text-white */
-    margin: 0;
-    padding: 0;
+    background-color: #343a40; /* Dark background for the body */
+    color: white;
 }
 
-.navbar-brand {
-    font-weight: bold;
-    color: navajowhite;
-    text-decoration: none;
+
+.card {
+    background-color: navajowhite;
+    border-color: darkred;
+    border-width: 5px;
+    border-style: groove;
+    margin: 10px 0;
+    padding: 15px;
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.navbar-brand:hover {
-    color: darkred;
-    text-decoration: underline;
+.card:hover {
+    transform: scale(1.05); 
+}
+
+.card img {
+    margin: 10%;
+    border-color: darkred;
+    border-width: 5px;
+    border-style: groove;
+    border-radius: 10px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    text-align: center;
 }
 
 h1, h2 {
@@ -25,73 +43,55 @@ h1, h2 {
     text-decoration-color: darkred;
 }
 
-.card {
-    background-color: navajowhite;
-    border-color: darkred;
-    border-width: 5px;
-    border-style: groove;
-    margin: 10px;
-    padding: 15px;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-}
-
-.card img {
-    margin: 0;
-    border: none;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-.card-body {
-    text-align: center;
-}
-
-.card-title {
-    font-size: 1.5rem;
-    color: darkred;
-    font-weight: bold;
-}
-
-.card-text {
-    font-size: 1rem;
-    color: #343a40;
-    margin: 5px 0;
-}
-
-img {
-    margin: 10%;
-    border-color: darkred;
-    border-width: 5px;
-    border-style: groove;
-}
-
 .title {
     color: darkred;
     font-weight: bold;
     text-decoration: none;
 }
 
-.title:hover {
-    text-decoration: underline;
+
+@media (max-width: 767px) {
+    .card {
+        margin: 10px;
+        padding: 10px;
+    }
+
+    img {
+        height: 150px;
+    }
+
+    .container {
+        padding: 0 15px;
+    }
 }
 
-#ingredient {
-    font-size: 1.5rem;
-    color: navajowhite;
-}
-
-#results {
+.container {
     margin-top: 20px;
-    padding: 10px;
-    background-color: rgba(255, 235, 205, 0.1); /* Light overlay for readability */
-    border: 2px solid navajowhite;
-    border-radius: 5px;
 }
+
+.container.text-center {
+    margin-bottom: 20px;
+}
+
+#related-cocktails {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+#related-cocktails .card {
+    width: 300px;
+    flex-grow: 1;
+}
+
+.card-text {
+    font-size: 1.1rem;
+    color: darkslategray;
+}
+
+
+.mb-4 {
+    margin-bottom: 2rem !important;
+}
+

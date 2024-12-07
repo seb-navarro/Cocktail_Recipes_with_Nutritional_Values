@@ -69,7 +69,7 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
 
                 card.innerHTML = `
                     <img src="${cocktailImageURL}${ingredient}-Medium.png" alt="${ingredient}">
-                    <h4 class="title d-flex justify-content-center align-items-center">${ingredient}</h4>
+                    <h4 class="title d-flex justify-content-center align-items-center"><a href="ingredient_only.html?ingredient=${ingredient}">${ingredient}</a></h4>
                     <h5 class="d-flex justify-content-center align-items-center">${measureText}</h5>
                     <h6 class="d-flex justify-content-center align-items-center"><em>(1oz = 28.35g)</em></h6>
                 `;

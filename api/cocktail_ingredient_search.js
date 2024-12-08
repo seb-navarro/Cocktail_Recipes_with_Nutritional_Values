@@ -16,6 +16,9 @@ document.getElementById('searchButton').addEventListener('click', () => {
             const results = data.drinks || [];
             const resultsContainer = document.getElementById('results');
             resultsContainer.innerHTML = '';
+
+            // check if any data is returned from the api
+            if (Array.isArray(results) && data.drinks.length > 0) {
             results.forEach(drink => {
                 const card = document.createElement('div');
                 card.classList.add('card', 'col-md-4', 'text-white', 'mb-4', 'p-5', 'g-3');
@@ -31,6 +34,11 @@ document.getElementById('searchButton').addEventListener('click', () => {
             `;
                 resultsContainer.appendChild(card);
             });
+        } else {
+            const message = document.createElement('p');
+            message.textContent = 'No cocktails found with the specified ingredient.';
+            resultsContainer.appendChild(message);
+        }
         })
         .catch(error => {
             // Custom error response

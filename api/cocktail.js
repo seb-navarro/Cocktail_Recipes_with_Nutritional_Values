@@ -1,7 +1,16 @@
 // Base URL for CocktailDB API search
 const CocktailApiKey = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
 
-document.getElementById('searchButton').addEventListener('click', () => {
+document.getElementById('searchButton').addEventListener('click', searchCocktails)
+// search by using the enter button
+document.getElementById('search').addEventListener('keydown', (clicked) => {
+    if (clicked.key === 'Enter') {
+        searchCocktails();
+    }
+})
+
+
+function searchCocktails() {
     // Functionality for search feature
     const query = document.getElementById('search').value.trim();
     if (!query) {
@@ -37,4 +46,4 @@ document.getElementById('searchButton').addEventListener('click', () => {
             console.error('Error:', error);
             alert('An error occurred while searching for the cocktail.');
         });
-})
+}

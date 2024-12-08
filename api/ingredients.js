@@ -80,12 +80,6 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
                     <img src="${cocktailImageURL}${ingredient}-Medium.png" alt="${ingredient}">
                     <h4 class="title d-flex justify-content-center align-items-center"><a href="ingredient_only.html?ingredient=${ingredient}" class="link-secondary link-offset-2 link-underline-opacity-50 link-underline-opacity-100-hover">${ingredient}</a></h4>
                     <h5 class="d-flex justify-content-center align-items-center">${measureText}</h5>
-                    <h6 class="d-flex justify-content-center align-items-center"><em>(1oz = 28.35g)</em></h6>
-                    <h6 class="d-flex justify-content-center align-items-center"><em>(1oz = 2.84cl)</em></h6>
-                    <h6 class="d-flex justify-content-center align-items-center"><em>(1oz = 0.1 Cup)</em></h6>
-                    <h6 class="d-flex justify-content-center align-items-center"><em>(1oz = 1.6 tbspn)</em></h6>
-                    <h6 class="d-flex justify-content-center align-items-center"><em>(1oz = 4.8 tsp)</em></h6>
-                    <h6 class="d-flex justify-content-center align-items-center"><em>All meassurements assume <strong>Imperial</strong> standards</em></h6>
                 `;
 
                 // Triggering API call for nutritionIX with redundancies

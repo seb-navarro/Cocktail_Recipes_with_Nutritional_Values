@@ -84,6 +84,7 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
                     <h6 class="d-flex justify-content-center align-items-center"><em>(1oz = 2.84cl)</em></h6>
                     <h6 class="d-flex justify-content-center align-items-center"><em>(1oz = 0.1 Cup)</em></h6>
                     <h6 class="d-flex justify-content-center align-items-center"><em>(1oz = 1.6 tbspn)</em></h6>
+                    <h6 class="d-flex justify-content-center align-items-center"><em>(1oz = 4.8 tsp)</em></h6>
                 `;
 
                 // Triggering API call for nutritionIX with redundancies

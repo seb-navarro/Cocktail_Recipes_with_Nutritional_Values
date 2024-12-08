@@ -9,6 +9,14 @@ document.getElementById('searchButton').addEventListener('click', () => {
         return;
     }
 
+document.getElementById('search').addEventListener('keydown', () => {
+    // Functionality for search feature
+    const query = document.getElementById('search').value.trim();
+    if (!query) {
+        alert('Please enter a cocktail name.');
+        return;
+    }
+
     fetch(`${CocktailApiKey}${query}`)
         // Fetch contents from the API response and format contents to display as HTML elements
         .then(response => response.json())

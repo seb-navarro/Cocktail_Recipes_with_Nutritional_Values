@@ -1,49 +1,36 @@
 
 body {
     font-family: monospace;
-    background-color: #343a40; /* Dark background for the body */
     color: white;
 }
 
-
-.card {
-    background-color: navajowhite;
+.card{
+    background-color:navajowhite;
     border-color: darkred;
     border-width: 5px;
-    border-style: groove;
-    margin: 10px 0;
-    padding: 15px;
-    transition: transform 0.3s ease-in-out;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-style:groove;
+    margin: 10px;
+    padding: 10px;
 }
 
-.card:hover {
-    transform: scale(1.05); 
-}
-
-.card img {
+img{
     margin: 10%;
-    border-color: darkred;
+    border-color:darkred;
     border-width: 5px;
     border-style: groove;
-    border-radius: 10px;
-    height: 200px;
-    object-fit: cover;
 }
 
-.card-body {
-    text-align: center;
-}
-
-h1, h2 {
+h1, h2{
     color: navajowhite;
     font-weight: bolder;
-    text-decoration: underline;
+    text-decoration:underline;
     text-decoration-thickness: 5px;
     text-decoration-color: darkred;
 }
 
-.title {
+
+
+.title{
     color: darkred;
     font-weight: bold;
     text-decoration: none;

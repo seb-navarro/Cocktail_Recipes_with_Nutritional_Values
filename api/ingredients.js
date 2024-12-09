@@ -9,6 +9,7 @@ const appId1 = "877e0602"; const appKey1 = "9c96f922fd03f229782ebd80f468e923";
 const appId2 = "b7b5026c"; const appKey2 = "41069590f031cbec6925acafe29900ad";
 const appId3 = "cca115e6"; const appKey3 = "ca8dbac9a61a187ee8dedb2446908fd1";
 const appId4 = "4a2d0dc2"; const appKey4 = "26b4cab3689702ce7e83c917ef91d81d";
+const appId5 = "8c9d2710"; const appKey5 = "7a7ac4b8da55cd1a3a1d35f2653a2e88";
 
 // Initializing/Resetting variables
 let total_caloriesValue = 0,
@@ -98,8 +99,7 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
                 // Triggering API call for nutritionIX with redundancies
 
 
-                listIngredientSpecs(nutritionIxURL, ingredient, appId4, appKey4, card, valid_meassurement);
-                
+                listIngredientSpecs(nutritionIxURL, ingredient, appId5, appKey5, card, valid_meassurement);
                 // Collate all contents for 'ingredients' div
                 ingredientsContainer.appendChild(card);
             });

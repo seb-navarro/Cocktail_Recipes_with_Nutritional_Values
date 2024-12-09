@@ -27,23 +27,26 @@
 
     <!-- Main Content -->
     <main>
-        <div class="container text-center">
-            <h1 class="mb-4">Ingredient and Associated Cocktails</h1>
+        <div class="row">
+            <h2>Ingredient Information</h2>
         </div>
-        <!-- Ingredient Information -->
-        <div class="row text-center">
-                <div class='col-4'id="results">
+        <div class="card">
+            <div class="row">
+                <div class="col-4" id="results">
                     <!-- Contents generated with javascript code -->
                 </div>
                 <div class="col-8">
                     <div class="card-body">
-                        <h2 class="card-title title">Description:</h2>
+                        <h2 class="card-title title">Description</h2>
                         <p class="card-text" id="description"></p>
-                        <p class="card-text" id="type"></p>
-                        <p class="card-text" id="alcohol"></p>
+                        <div id="total-nutrition" class="mt-4">
+                            <!-- Contents generated with javascript code -->
+                        </div>
                     </div>
                 </div>
+            </div>
         </div>
+        
             <div class="container">
                 <h3 class="my-3">Related Cocktails</h3>
                 <div class="row d-flex justify-content-center align-items-center my-3" id="related-cocktails">

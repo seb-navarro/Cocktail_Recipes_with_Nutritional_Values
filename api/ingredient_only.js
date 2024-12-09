@@ -26,31 +26,39 @@ fetch(`${ingredientURL}${ingredientName}`)
         }
 
         results.forEach(ingredient => {
+            // Create the card container
             const card = document.createElement('div');
             card.classList.add('card', 'col');
             card.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
-
+        
+            // Populate the card content (image and name only)
             card.innerHTML = `
-            <div class="d-flex align-items-center">
-                <!-- Left Section: Image and Name -->
-                <div class="text-center me-3">
-                    <img src="https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient}.png" 
-                        class="img-fluid" alt="${ingredient.strIngredient}" style="height: 400px; width: 1200px; object-fit: cover; ">
-                    <h5 class="mt-2">${ingredient.strIngredient}</h5>
-                </div>
-                <!-- Right Section: Description and Details -->
-                <div>
-                    <div class="card-body">
-                        <p class="card-text">${ingredient.strDescription || 'No description available.'}</p>
-                        <p class="card-text"><strong>Type:</strong> ${ingredient.strType || 'Unknown'}</p>
-                        <p class="card-text"><strong>Alcoholic:</strong> ${ingredient.strAlcohol ? 'Yes' : 'No'}</p>
+                <div class="d-flex align-items-center">
+                    <!-- Left Section: Image and Name -->
+                    <div class="text-center me-3">
+                        <img src="https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient}.png" 
+                             class="img-fluid" alt="${ingredient.strIngredient}" 
+                             style="height: 200px; width: 200px; object-fit: cover;">
+                        <h5 class="mt-2">${ingredient.strIngredient}</h5>
                     </div>
                 </div>
-            </div>
-        `;
-        // Collate all contents for 'results' div
-        resultsContainer.appendChild(card);
+            `;
+        
+            // Append the card to the results container
+            const resultsContainer = document.getElementById('results'); // Ensure this element exists
+            resultsContainer.appendChild(card);
+        
+            // Add description and details to the separate "description" element
+            const description = document.getElementById('description'); // Ensure this element exists
+            description.innerHTML = `
+                <div class="card-body">
+                    <p class="card-text">${ingredient.strDescription || 'No description available.'}</p>
+                    <p class="card-text"><strong>Type:</strong> ${ingredient.strType || 'Unknown'}</p>
+                    <p class="card-text"><strong>Alcoholic:</strong> ${ingredient.strAlcohol ? 'Yes' : 'No'}</p>
+                </div>
+            `;
         });
+        
 
         // Fetch related cocktails data
         fetch(`${relatedCocktailURL}${ingredientName}`)

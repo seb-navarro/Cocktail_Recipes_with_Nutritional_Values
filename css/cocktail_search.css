@@ -12,8 +12,13 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     overflow: hidden;
+    min-height: 460px;
 }
 
+
+.card-body {
+    align-content: center;
+}
 .card img {
     margin: 0;
     width: 100%;
@@ -21,6 +26,8 @@ body {
     object-fit: cover;
     border-bottom: 3px solid #8b0000;
 }
+
+
 
 h1 {
     color: #ffefcf;
@@ -91,3 +98,4 @@ h1 {
     background-color: #ff4500;
     transform: scale(1.05);
 }
+

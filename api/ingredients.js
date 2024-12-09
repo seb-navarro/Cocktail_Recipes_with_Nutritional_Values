@@ -10,6 +10,7 @@ const appId2 = "b7b5026c"; const appKey2 = "41069590f031cbec6925acafe29900ad";
 const appId3 = "cca115e6"; const appKey3 = "ca8dbac9a61a187ee8dedb2446908fd1";
 const appId4 = "4a2d0dc2"; const appKey4 = "26b4cab3689702ce7e83c917ef91d81d";
 const appId5 = "8c9d2710"; const appKey5 = "7a7ac4b8da55cd1a3a1d35f2653a2e88";
+const appId6 = "931b20fb"; const appKey6 = "76da69c1e9d2b01224c6cc11f8de562e";
 
 // Initializing/Resetting variables
 let total_caloriesValue = 0,
@@ -82,9 +83,9 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
 
                 let valid_meassurement = false;
                 //console.log(meassurement_check)
-                
 
-                if(meassurement_check.includes("oz") || meassurement_check.includes("cl") || meassurement_check.includes("cup") || meassurement_check.includes("cups") || meassurement_check.includes("tbspn") || meassurement_check.includes("tsp") || meassurement_check.includes("tablespoons") || meassurement_check.includes("dl") || meassurement_check.includes("shot") || meassurement_check.includes("shots")){
+
+                if (meassurement_check.includes("oz") || meassurement_check.includes("cl") || meassurement_check.includes("cup") || meassurement_check.includes("cups") || meassurement_check.includes("tbspn") || meassurement_check.includes("tsp") || meassurement_check.includes("tablespoons") || meassurement_check.includes("dl") || meassurement_check.includes("shot") || meassurement_check.includes("shots")) {
                     valid_meassurement = true;
                 }
                 //console.log(valid_meassurement)
@@ -99,9 +100,9 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
                 // Triggering API call for nutritionIX with redundancies
 
 
-                listIngredientSpecs(nutritionIxURL, ingredient, appId5, appKey5, card, valid_meassurement);
+                listIngredientSpecs(nutritionIxURL, ingredient, appId6, appKey6, card, valid_meassurement);
 
-                
+
 
                 // Collate all contents for 'ingredients' div
                 ingredientsContainer.appendChild(card);
@@ -182,9 +183,9 @@ function listIngredientSpecs(url, ingredient, appId, appKey, card, valid_meassur
 
 
 
-                
 
-                if(valid_meassurement === true){
+
+                if (valid_meassurement === true && food.food_name != 'turkey') {
                     // Keeping track of sum values for each ingredient's spec
                     total_caloriesValue += Number(food.nf_calories) * conversion_rate;
                     total_fatValue += Number(food.nf_total_fat) * conversion_rate;
@@ -199,7 +200,7 @@ function listIngredientSpecs(url, ingredient, appId, appKey, card, valid_meassur
                     carbs_span.innerHTML = (food.nf_total_carbohydrate * conversion_rate).toFixed(2) + 'g';
                     sugars_span.innerHTML = (food.nf_sugars * conversion_rate).toFixed(2) + 'g';
                     protein_span.innerHTML = (food.nf_protein * conversion_rate).toFixed(2) + 'g';
-                } else{
+                } else {
                     calories_span.innerHTML = "N/A";
                     fat_span.innerHTML = "N/A";
                     sodium_span.innerHTML = "N/A";
@@ -207,7 +208,7 @@ function listIngredientSpecs(url, ingredient, appId, appKey, card, valid_meassur
                     sugars_span.innerHTML = "N/A";
                     protein_span.innerHTML = "N/A";
                 }
-                
+
 
                 // Text description for lists
                 desc_li.innerHTML = "1oz is equal to:";
@@ -261,5 +262,80 @@ function listIngredientSpecs(url, ingredient, appId, appKey, card, valid_meassur
             // Custom error response
             console.error("NutritionIX API Error:", error);
             console.log("Ingredient with error: " + ingredient);
+            //inner html
+
+            // Creating HTML elements for when no nutritional information can be found
+            const specs_div = createNode('div');
+            const specs_ul = createNode('ul');
+
+            const desc_li = createNode('li');
+            const calories_li = createNode('li');
+            const fat_li = createNode('li');
+            const sodium_li = createNode('li');
+            const carbs_li = createNode('li');
+            const sugars_li = createNode('li');
+            const protein_li = createNode('li');
+
+            const calories_span = createNode('span');
+            const fat_span = createNode('span');
+            const sodium_span = createNode('span');
+            const carbs_span = createNode('span');
+            const sugars_span = createNode('span');
+            const protein_span = createNode('span');
+
+
+            // Setting required attributes for HTML elements
+            specs_div.setAttribute('class', 'mx-3');
+            specs_ul.setAttribute('class', 'list-group');
+
+            desc_li.setAttribute('class', 'list-group-item list-group-item-action list-group-item-warning d-flex justify-content-between align-items-center');
+            calories_li.setAttribute('class', 'list-group-item list-group-item-action list-group-item-warning d-flex justify-content-between align-items-center');
+            fat_li.setAttribute('class', 'list-group-item list-group-item-action list-group-item-warning d-flex justify-content-between align-items-center');
+            sodium_li.setAttribute('class', 'list-group-item list-group-item-action list-group-item-warning d-flex justify-content-between align-items-center');
+            carbs_li.setAttribute('class', 'list-group-item list-group-item-action list-group-item-warning d-flex justify-content-between align-items-center');
+            sugars_li.setAttribute('class', 'list-group-item list-group-item-action list-group-item-warning d-flex justify-content-between align-items-center');
+            protein_li.setAttribute('class', 'list-group-item list-group-item-action list-group-item-warning d-flex justify-content-between align-items-center');
+
+            calories_span.setAttribute('class', 'badge text-bg-secondary rounded-pill');
+            fat_span.setAttribute('class', 'badge text-bg-secondary rounded-pill');
+            sodium_span.setAttribute('class', 'badge text-bg-secondary rounded-pill');
+            carbs_span.setAttribute('class', 'badge text-bg-secondary rounded-pill');
+            sugars_span.setAttribute('class', 'badge text-bg-secondary rounded-pill');
+            protein_span.setAttribute('class', 'badge text-bg-secondary rounded-pill');
+
+            calories_span.innerHTML = "N/A";
+            fat_span.innerHTML = "N/A";
+            sodium_span.innerHTML = "N/A";
+            carbs_span.innerHTML = "N/A";
+            sugars_span.innerHTML = "N/A";
+            protein_span.innerHTML = "N/A";
+
+            desc_li.innerHTML = "1oz is equal to:";
+                calories_li.innerHTML = "Calories";
+                fat_li.innerHTML = "Fat";
+                sodium_li.innerHTML = "Sodium";
+                carbs_li.innerHTML = "Carbohydrates";
+                sugars_li.innerHTML = "Sugars";
+                protein_li.innerHTML = "Protein";
+
+                // Building card and card contents
+                append(calories_li, calories_span);
+                append(fat_li, fat_span);
+                append(sodium_li, sodium_span);
+                append(carbs_li, carbs_span);
+                append(sugars_li, sugars_span);
+                append(protein_li, protein_span);
+
+                append(specs_ul, desc_li);
+                append(specs_ul, calories_li);
+                append(specs_ul, fat_li);
+                append(specs_ul, sodium_li);
+                append(specs_ul, carbs_li);
+                append(specs_ul, sugars_li);
+                append(specs_ul, protein_li);
+
+                append(specs_div, specs_ul);
+
+                append(card, specs_div);
         });
 }

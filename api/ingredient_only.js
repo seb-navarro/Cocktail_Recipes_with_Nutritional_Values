@@ -27,6 +27,7 @@ function append(parent, child) {
     return parent.appendChild(child);
 }
 
+
 // Initialize total nutrition values
 let total_caloriesValue = 0,
     total_fatValue = 0,

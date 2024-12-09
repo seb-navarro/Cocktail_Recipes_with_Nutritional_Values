@@ -13,6 +13,7 @@ const appId5 = "8c9d2710"; const appKey5 = "7a7ac4b8da55cd1a3a1d35f2653a2e88";
 const appId6 = "931b20fb"; const appKey6 = "76da69c1e9d2b01224c6cc11f8de562e";
 const appId7 = "4315d4a8"; const appKey7 = "f17c3d4d8cfe2ff7dac75ca321b0483f";
 
+
 // Initializing/Resetting variables
 let total_caloriesValue = 0,
     total_fatValue = 0,

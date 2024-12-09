@@ -17,6 +17,7 @@ const totalNutritionContainer = document.getElementById('total-nutrition');
 const nutritionIxURL = "https://trackapi.nutritionix.com/v2/natural/nutrients";
 const appId5 = "8c9d2710", appKey5 = "7a7ac4b8da55cd1a3a1d35f2653a2e88";
 const appId6 = "931b20fb", appKey6 = "76da69c1e9d2b01224c6cc11f8de562e";
+const appId7 = "e55a38e5"; const appKey7 = "f5cb5c0d0deabb222c1551233c834d20";
 
 // Initialize total nutrition values
 let total_caloriesValue = 0,
@@ -97,7 +98,7 @@ fetch(`${ingredientURL}${ingredientName}`)
                 .catch(error => console.error(`Error fetching related cocktails: ${error}`));
 
             // Fetch nutritional data
-            listIngredientSpecs(nutritionIxURL, ingredientName, appId6, appKey6, ingredientCard);
+            listIngredientSpecs(nutritionIxURL, ingredientName, appId7, appKey7, ingredientCard);
         });
     })
     .catch(error => console.error(`Error fetching ingredient data: ${error}`));

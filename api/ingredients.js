@@ -70,7 +70,7 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
             // Looping through all ingredients
             ingredientsArr.forEach(ingredient => {
                 const card = document.createElement('div');
-                card.classList.add('card', 'col-3');
+                card.classList.add('card', 'col-lg-3');
                 const measureText = ingredient === 'Salt'
                     ? 'Garnish'
 
@@ -96,17 +96,10 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
                 `;
 
                 // Triggering API call for nutritionIX with redundancies
-                apiResponse = listIngredientSpecs(nutritionIxURL, ingredient, appId4, appKey4, card, valid_meassurement);
-                if (apiResponse == "Y") {
-                    // First redundancy
-                    listIngredientSpecs(nutritionIxURL, ingredient, appId2, appKey2, card, valid_meassurement);
-                }
-                if (apiResponse == "Y") {
-                    // Second redundancy
-                    listIngredientSpecs(nutritionIxURL, ingredient, appId3, appKey3, card, valid_meassurement);
-                }
-                // Each redundancy allows usage of the next API keys
 
+
+                listIngredientSpecs(nutritionIxURL, ingredient, appId4, appKey4, card);
+                
                 // Collate all contents for 'ingredients' div
                 ingredientsContainer.appendChild(card);
             });
@@ -133,7 +126,6 @@ function listIngredientSpecs(url, ingredient, appId, appKey, card, valid_meassur
             return resp.json();
         })
         .then(data => {
-            apiFail = "";
             const foods = data.foods || [];
             if (!foods.length) {
                 console.warn(`No foods found for ingredient: ${ingredient}`);
@@ -216,9 +208,9 @@ function listIngredientSpecs(url, ingredient, appId, appKey, card, valid_meassur
                 // Text description for lists
                 desc_li.innerHTML = "1oz is equal to:";
                 calories_li.innerHTML = "Calories";
-                fat_li.innerHTML = "Total Fat";
+                fat_li.innerHTML = "Fat";
                 sodium_li.innerHTML = "Sodium";
-                carbs_li.innerHTML = "Total Carbohydrates";
+                carbs_li.innerHTML = "Carbohydrates";
                 sugars_li.innerHTML = "Sugars";
                 protein_li.innerHTML = "Protein";
 
@@ -246,6 +238,7 @@ function listIngredientSpecs(url, ingredient, appId, appKey, card, valid_meassur
             // Display total values after fetching all ingredient data
             const totalContainer = document.getElementById('total-nutrition');
             totalContainer.innerHTML = `
+
                 <h4>Total Nutrition Values (Estimate):</h4>
                 <ul class="list-group list-group-flush bg-transparent">
                     <li class="list-group-item bg-transparent">Calories: ${total_caloriesValue.toFixed(2)}</li>
@@ -255,15 +248,12 @@ function listIngredientSpecs(url, ingredient, appId, appKey, card, valid_meassur
                     <li class="list-group-item bg-transparent">Sugars: ${total_sugarsValue.toFixed(2)}g</li>
                     <li class="list-group-item bg-transparent">Protein: ${total_proteinValue.toFixed(2)}g</li>
                 </ul>
+
             `;
         })
         .catch(error => {
             // Custom error response
             console.error("NutritionIX API Error:", error);
             console.log("Ingredient with error: " + ingredient);
-
-            // Return value for API fetch failure
-            apiFail = "Y";
-            return apiFail;
         });
 }

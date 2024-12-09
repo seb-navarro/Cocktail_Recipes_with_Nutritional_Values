@@ -213,6 +213,7 @@ fetch(`${ingredientURL}${ingredientName}`)
                     <li class="list-group-item bg-transparent">Sugars: ${total_sugarsValue.toFixed(2)}g</li>
                     <li class="list-group-item bg-transparent">Protein: ${total_proteinValue.toFixed(2)}g</li>
                 </ul>
+                <h6><em><strong>Per 1 oz measured</strong></em></h6>
                 
             `;
         

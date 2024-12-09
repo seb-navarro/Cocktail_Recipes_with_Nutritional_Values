@@ -172,18 +172,19 @@ function listIngredientSpecs(url, ingredient, appId, appKey, card, valid_meassur
                 sugars_span.setAttribute('class', 'badge text-bg-secondary rounded-pill');
                 protein_span.setAttribute('class', 'badge text-bg-secondary rounded-pill');
 
-                // Keeping track of sum values for each ingredient's spec
-                total_caloriesValue += Number(food.nf_calories);
-                total_fatValue += Number(food.nf_total_fat);
-                total_sodiumValue += Number(food.nf_sodium);
-                total_carbsValue += Number(food.nf_total_carbohydrate);
-                total_sugarsValue += Number(food.nf_sugars);
-                total_proteinValue += Number(food.nf_protein);
-
                 // Calculating 'conversion_rate' used in getting ounce equivalent values
                 serving_amount = food.serving_weight_grams;
                 conversion_rate = 28.35 / serving_amount;
                 // console.log(conversion_rate)    
+
+
+                // Keeping track of sum values for each ingredient's spec
+                total_caloriesValue += Number(food.nf_calories * conversion_rate).toFixed(2);
+                total_fatValue += Number(food.nf_total_fat * conversion_rate).toFixed(2);
+                total_sodiumValue += Number(food.nf_sodium * conversion_rate).toFixed(2);
+                total_carbsValue += Number(food.nf_total_carbohydrate * conversion_rate).toFixed(2);
+                total_sugarsValue += Number(food.nf_sugars * conversion_rate).toFixed(2);
+                total_proteinValue += Number(food.nf_protein * conversion_rate).toFixed(2);
                 
 
                 if(valid_meassurement === true){
@@ -239,12 +240,12 @@ function listIngredientSpecs(url, ingredient, appId, appKey, card, valid_meassur
 
                 <h4>Total Nutrition Values (Estimate):</h4>
                 <ul class="list-group list-group-flush bg-transparent">
-                    <li class="list-group-item bg-transparent">Calories: ${total_caloriesValue.toFixed(2)}</li>
-                    <li class="list-group-item bg-transparent">Total Fat: ${total_fatValue.toFixed(2)}g</li>
-                    <li class="list-group-item bg-transparent">Sodium: ${total_sodiumValue.toFixed(2)}g</li>
-                    <li class="list-group-item bg-transparent">Total Carbohydrates: ${total_carbsValue.toFixed(2)}g</li>
-                    <li class="list-group-item bg-transparent">Sugars: ${total_sugarsValue.toFixed(2)}g</li>
-                    <li class="list-group-item bg-transparent">Protein: ${total_proteinValue.toFixed(2)}g</li>
+                    <li class="list-group-item bg-transparent">Calories: ${total_caloriesValue}</li>
+                    <li class="list-group-item bg-transparent">Total Fat: ${total_fatValue}g</li>
+                    <li class="list-group-item bg-transparent">Sodium: ${total_sodiumValue}g</li>
+                    <li class="list-group-item bg-transparent">Total Carbohydrates: ${total_carbsValue}g</li>
+                    <li class="list-group-item bg-transparent">Sugars: ${total_sugarsValue}g</li>
+                    <li class="list-group-item bg-transparent">Protein: ${total_proteinValue}g</li>
                 </ul>
 
             `;

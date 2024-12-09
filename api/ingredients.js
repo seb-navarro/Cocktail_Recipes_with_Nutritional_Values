@@ -84,7 +84,7 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
                 //console.log(meassurement_check)
                 
 
-                if(meassurement_check.includes("oz") || meassurement_check.includes("cl") || meassurement_check.includes("cup") || meassurement_check.includes("cups") || meassurement_check.includes("tbspn") || meassurement_check.includes("tsp") || meassurement_check.includes("tablespoons") || meassurement_check.includes("dl")){
+                if(meassurement_check.includes("oz") || meassurement_check.includes("cl") || meassurement_check.includes("cup") || meassurement_check.includes("cups") || meassurement_check.includes("tbspn") || meassurement_check.includes("tsp") || meassurement_check.includes("tablespoons") || meassurement_check.includes("dl") || meassurement_check.includes("shot") || meassurement_check.includes("shots")){
                     valid_meassurement = true;
                 }
                 //console.log(valid_meassurement)

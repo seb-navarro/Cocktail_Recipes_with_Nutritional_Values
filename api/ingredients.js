@@ -100,7 +100,9 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
 
 
                 listIngredientSpecs(nutritionIxURL, ingredient, appId5, appKey5, card, valid_meassurement);
+
                 
+
                 // Collate all contents for 'ingredients' div
                 ingredientsContainer.appendChild(card);
             });

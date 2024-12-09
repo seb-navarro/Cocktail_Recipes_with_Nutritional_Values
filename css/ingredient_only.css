@@ -72,15 +72,20 @@ h1, h2{
     flex-grow: 1;
 }
 
-.card-text {
-    font-size: 1.1rem;
-    color: darkslategray;
-}
-
-
 .mb-4 {
     margin-bottom: 2rem !important;
 }
+
+.main-card {
+margin: 50px;
+}
+.ingredient-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
 
 /* Code below here is all for the footer */
 /* Code below here is all for the footer */

@@ -213,8 +213,7 @@ fetch(`${ingredientURL}${ingredientName}`)
                     <li class="list-group-item bg-transparent">Sugars: ${total_sugarsValue.toFixed(2)}g</li>
                     <li class="list-group-item bg-transparent">Protein: ${total_proteinValue.toFixed(2)}g</li>
                 </ul>
-                <br>
-                <h6><em><strong>Per 1 oz of each ingredient measured</strong></em></h6>
+                
             `;
         
             const totalContainer = document.getElementById('total-nutrition');

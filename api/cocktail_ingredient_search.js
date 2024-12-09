@@ -29,7 +29,7 @@ document.getElementById('search').addEventListener('keydown', (clicked) => {
             if (Array.isArray(results) && data.drinks.length > 0) {
             results.forEach(drink => {
                 const card = document.createElement('div');
-                card.classList.add('card', 'col-md-4', 'text-white', 'mb-4', 'p-5', 'g-3');
+                card.classList.add('card', 'col-md-3', 'text-white', 'm-4', 'p-5', 'g-3');
                 card.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
 
                 // Building card and card contents

@@ -8,6 +8,7 @@ const nutritionIxURL = "https://trackapi.nutritionix.com/v2/natural/nutrients";
 const appId1 = "877e0602"; const appKey1 = "9c96f922fd03f229782ebd80f468e923";
 const appId2 = "b7b5026c"; const appKey2 = "41069590f031cbec6925acafe29900ad";
 const appId3 = "cca115e6"; const appKey3 = "ca8dbac9a61a187ee8dedb2446908fd1";
+const appId4 = "4a2d0dc2"; const appKey4 = "26b4cab3689702ce7e83c917ef91d81d";
 
 // Initializing/Resetting variables
 let total_caloriesValue = 0,
@@ -75,6 +76,18 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
 
                     : drink[`strMeasure${ingredientsArr.indexOf(ingredient) + 1}`] || '';
 
+                const meassurement_check = measureText.split(" ").join(",").split("\r").join(",").split("\n").join(",").split(",");
+
+
+                let valid_meassurement = false;
+                //console.log(meassurement_check)
+                
+
+                if(meassurement_check.includes("oz") || meassurement_check.includes("cl") || meassurement_check.includes("cup") || meassurement_check.includes("cups") || meassurement_check.includes("tbspn") || meassurement_check.includes("tsp") || meassurement_check.includes("tablespoons") || meassurement_check.includes("dl")){
+                    valid_meassurement = true;
+                }
+                //console.log(valid_meassurement)
+
                 // Building card and card contents
                 card.innerHTML = `
                     <img src="${cocktailImageURL}${ingredient}-Medium.png" alt="${ingredient}">
@@ -83,14 +96,14 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
                 `;
 
                 // Triggering API call for nutritionIX with redundancies
-                apiResponse = listIngredientSpecs(nutritionIxURL, ingredient, appId1, appKey1, card);
+                apiResponse = listIngredientSpecs(nutritionIxURL, ingredient, appId4, appKey4, card, valid_meassurement);
                 if (apiResponse == "Y") {
                     // First redundancy
-                    listIngredientSpecs(nutritionIxURL, ingredient, appId2, appKey2, card);
+                    listIngredientSpecs(nutritionIxURL, ingredient, appId2, appKey2, card, valid_meassurement);
                 }
                 if (apiResponse == "Y") {
                     // Second redundancy
-                    listIngredientSpecs(nutritionIxURL, ingredient, appId3, appKey3, card);
+                    listIngredientSpecs(nutritionIxURL, ingredient, appId3, appKey3, card, valid_meassurement);
                 }
                 // Each redundancy allows usage of the next API keys
 
@@ -103,7 +116,7 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
 
 
 
-function listIngredientSpecs(url, ingredient, appId, appKey, card) {
+function listIngredientSpecs(url, ingredient, appId, appKey, card, valid_meassurement) {
     // Fetch contents from the API response and format contents to display as HTML elements
     fetch(url, {
         // API header and body details for NutritionIX
@@ -167,25 +180,38 @@ function listIngredientSpecs(url, ingredient, appId, appKey, card) {
                 sugars_span.setAttribute('class', 'badge text-bg-secondary rounded-pill');
                 protein_span.setAttribute('class', 'badge text-bg-secondary rounded-pill');
 
-                // Keeping track of sum values for each ingredient's spec
-                total_caloriesValue += Number(food.nf_calories);
-                total_fatValue += Number(food.nf_total_fat);
-                total_sodiumValue += Number(food.nf_sodium);
-                total_carbsValue += Number(food.nf_total_carbohydrate);
-                total_sugarsValue += Number(food.nf_sugars);
-                total_proteinValue += Number(food.nf_protein);
+                
+                
 
-                // Calculating 'conversion_rate' used in getting ounce equivalent values
-                serving_amount = food.serving_weight_grams;
-                conversion_rate = 28.35 / serving_amount;
-                // console.log(conversion_rate)
+                if(valid_meassurement === true){
+                    // Keeping track of sum values for each ingredient's spec
+                    total_caloriesValue += Number(food.nf_calories);
+                    total_fatValue += Number(food.nf_total_fat);
+                    total_sodiumValue += Number(food.nf_sodium);
+                    total_carbsValue += Number(food.nf_total_carbohydrate);
+                    total_sugarsValue += Number(food.nf_sugars);
+                    total_proteinValue += Number(food.nf_protein);
 
-                calories_span.innerHTML = (food.nf_calories * conversion_rate).toFixed(2);
-                fat_span.innerHTML = (food.nf_total_fat * conversion_rate).toFixed(2) + 'g';
-                sodium_span.innerHTML = (food.nf_sodium * conversion_rate).toFixed(2) + 'g';
-                carbs_span.innerHTML = (food.nf_total_carbohydrate * conversion_rate).toFixed(2) + 'g';
-                sugars_span.innerHTML = (food.nf_sugars * conversion_rate).toFixed(2) + 'g';
-                protein_span.innerHTML = (food.nf_protein * conversion_rate).toFixed(2) + 'g';
+                    // Calculating 'conversion_rate' used in getting ounce equivalent values
+                    serving_amount = food.serving_weight_grams;
+                    conversion_rate = 28.35 / serving_amount;
+                    // console.log(conversion_rate)
+
+                    calories_span.innerHTML = (food.nf_calories * conversion_rate).toFixed(2);
+                    fat_span.innerHTML = (food.nf_total_fat * conversion_rate).toFixed(2) + 'g';
+                    sodium_span.innerHTML = (food.nf_sodium * conversion_rate).toFixed(2) + 'g';
+                    carbs_span.innerHTML = (food.nf_total_carbohydrate * conversion_rate).toFixed(2) + 'g';
+                    sugars_span.innerHTML = (food.nf_sugars * conversion_rate).toFixed(2) + 'g';
+                    protein_span.innerHTML = (food.nf_protein * conversion_rate).toFixed(2) + 'g';
+                } else{
+                    calories_span.innerHTML = "N/A";
+                    fat_span.innerHTML = "N/A";
+                    sodium_span.innerHTML = "N/A";
+                    carbs_span.innerHTML = "N/A";
+                    sugars_span.innerHTML = "N/A";
+                    protein_span.innerHTML = "N/A";
+                }
+                
 
                 // Text description for lists
                 desc_li.innerHTML = "1oz is equal to:";
@@ -220,14 +246,14 @@ function listIngredientSpecs(url, ingredient, appId, appKey, card) {
             // Display total values after fetching all ingredient data
             const totalContainer = document.getElementById('total-nutrition');
             totalContainer.innerHTML = `
-                <h4>Total Nutrition Values:</h4>
+                <h4>Total Nutrition Values (Estimate):</h4>
                 <ul class="list-group list-group-flush bg-transparent">
-                    <li class="list-group-item bg-transparent">Calories: ${total_caloriesValue}g</li>
-                    <li class="list-group-item bg-transparent">Total Fat: ${total_fatValue}g</li>
-                    <li class="list-group-item bg-transparent">Sodium: ${total_sodiumValue}g</li>
-                    <li class="list-group-item bg-transparent">Total Carbohydrates: ${total_carbsValue}g</li>
-                    <li class="list-group-item bg-transparent">Sugars: ${total_sugarsValue}g</li>
-                    <li class="list-group-item bg-transparent">Protein: ${total_proteinValue}g</li>
+                    <li class="list-group-item bg-transparent">Calories: ${total_caloriesValue.toFixed(2)}</li>
+                    <li class="list-group-item bg-transparent">Total Fat: ${total_fatValue.toFixed(2)}g</li>
+                    <li class="list-group-item bg-transparent">Sodium: ${total_sodiumValue.toFixed(2)}g</li>
+                    <li class="list-group-item bg-transparent">Total Carbohydrates: ${total_carbsValue.toFixed(2)}g</li>
+                    <li class="list-group-item bg-transparent">Sugars: ${total_sugarsValue.toFixed(2)}g</li>
+                    <li class="list-group-item bg-transparent">Protein: ${total_proteinValue.toFixed(2)}g</li>
                 </ul>
             `;
         })

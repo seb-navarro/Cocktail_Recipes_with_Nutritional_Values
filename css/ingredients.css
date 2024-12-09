@@ -37,3 +37,32 @@ h1, h2{
 h4 {
     font-weight: bold;
 }
+
+
+/* Code below here is all for the footer */
+
+footer {
+    position: relative;
+    bottom: 0px;
+    background-color: navajowhite;
+    border-top: #8b0000;
+    border-width: 3px;
+    border-style: solid;
+    border-left: navajowhite;
+    border-right: navajowhite;
+    border-bottom: navajowhite;
+
+}
+
+
+#Nutritionix_logo {
+    width: 200px;
+    height: auto;
+    border: none;
+}
+
+#cocktaildb_logo {
+    width: 200px;
+    height: auto;
+    border: none;
+}

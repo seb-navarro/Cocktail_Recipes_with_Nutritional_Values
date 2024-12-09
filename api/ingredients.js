@@ -211,12 +211,12 @@ function listIngredientSpecs(url, ingredient, appId, appKey, card) {
             const totalContainer = document.getElementById('total-nutrition');
             totalContainer.innerHTML = `
                 <h4>Total Nutrition Values:</h4>
-                <p>Calories: ${total_caloriesValue}g</p>
-                <p>Total Fat: ${total_fatValue}g</p>
-                <p>Sodium: ${total_sodiumValue}g</p>
-                <p>Total Carbohydrates: ${total_carbsValue}g</p>
-                <p>Sugars: ${total_sugarsValue}g</p>
-                <p>Protein: ${total_proteinValue}g</p>
+                <p class="ps-3">Calories: ${total_caloriesValue}g</p>
+                <p class="ps-3">Total Fat: ${total_fatValue}g</p>
+                <p class="ps-3">Sodium: ${total_sodiumValue}g</p>
+                <p class="ps-3">Total Carbohydrates: ${total_carbsValue}g</p>
+                <p class="ps-3">Sugars: ${total_sugarsValue}g</p>
+                <p class="ps-3">Protein: ${total_proteinValue}g</p>
             `;
         })
         .catch(error => {

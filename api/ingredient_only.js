@@ -16,7 +16,7 @@ const totalNutritionContainer = document.getElementById('total-nutrition');
 // NutritionIX API credentials
 const nutritionIxURL = "https://trackapi.nutritionix.com/v2/natural/nutrients";
 const appId5 = "8c9d2710", appKey5 = "7a7ac4b8da55cd1a3a1d35f2653a2e88";
-const appId6 = "fca5b988", appKey6 = "111efaf6f3a0e70dd846d29e0e16875d";
+const appId6 = "931b20fb", appKey6 = "76da69c1e9d2b01224c6cc11f8de562e";
 
 // Initialize total nutrition values
 let total_caloriesValue = 0,

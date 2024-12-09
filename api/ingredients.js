@@ -11,7 +11,7 @@ const appId3 = "cca115e6"; const appKey3 = "ca8dbac9a61a187ee8dedb2446908fd1";
 const appId4 = "4a2d0dc2"; const appKey4 = "26b4cab3689702ce7e83c917ef91d81d";
 const appId5 = "8c9d2710"; const appKey5 = "7a7ac4b8da55cd1a3a1d35f2653a2e88";
 const appId6 = "931b20fb"; const appKey6 = "76da69c1e9d2b01224c6cc11f8de562e";
-const appId7 = "e55a38e5"; const appKey7 = "f5cb5c0d0deabb222c1551233c834d20";
+const appId7 = "4315d4a8"; const appKey7 = "f17c3d4d8cfe2ff7dac75ca321b0483f";
 
 
 // Initializing/Resetting variables

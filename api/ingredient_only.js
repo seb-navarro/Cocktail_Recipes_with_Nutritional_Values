@@ -17,7 +17,16 @@ const totalNutritionContainer = document.getElementById('total-nutrition');
 const nutritionIxURL = "https://trackapi.nutritionix.com/v2/natural/nutrients";
 const appId5 = "8c9d2710", appKey5 = "7a7ac4b8da55cd1a3a1d35f2653a2e88";
 const appId6 = "931b20fb", appKey6 = "76da69c1e9d2b01224c6cc11f8de562e";
-const appId7 = "e55a38e5"; const appKey7 = "f5cb5c0d0deabb222c1551233c834d20";
+const appId7 = "4315d4a8"; const appKey7 = "f17c3d4d8cfe2ff7dac75ca321b0483f";
+
+function createNode(element) {
+    return document.createElement(element);
+}
+
+function append(parent, child) {
+    return parent.appendChild(child);
+}
+
 
 // Initialize total nutrition values
 let total_caloriesValue = 0,
@@ -41,11 +50,12 @@ fetch(`${ingredientURL}${ingredientName}`)
             resultsContainer.innerHTML = `<p>No information found for "${ingredientName}".</p>`;
             return;
         }
+        console.log(document.getElementById('total-nutrition'));
 
         results.forEach(ingredient => {
             // Create and populate ingredient card
             const ingredientCard = document.createElement('div');
-            ingredientCard.classList.add('col');
+            ingredientCard.classList.add('row');
             ingredientCard.innerHTML = `
                 <div class="d-flex align-items-center mx-auto ingredient-card">
                     <div class="text-center me-3">
@@ -97,75 +107,123 @@ fetch(`${ingredientURL}${ingredientName}`)
                 })
                 .catch(error => console.error(`Error fetching related cocktails: ${error}`));
 
-            // Fetch nutritional data
-            listIngredientSpecs(nutritionIxURL, ingredientName, appId7, appKey7, ingredientCard);
         });
+        listIngredientSpecs(nutritionIxURL, ingredientName, appId7, appKey7, totalNutritionContainer);
     })
-    .catch(error => console.error(`Error fetching ingredient data: ${error}`));
-
-// Fetch and list ingredient specs
-function listIngredientSpecs(url, ingredientName, appId, appKey, card) {
-    fetch(url, {
-        method: "POST",
-        body: JSON.stringify({ query: ingredientName }),
-        headers: {
-            "Content-Type": "application/json; charset=UTF-8",
-            "x-app-id": appId,
-            "x-app-key": appKey
+        
+        function listIngredientSpecs(url, ingredientName, appId, appKey, card) {
+            fetch(url, {
+                method: "POST",
+                body: JSON.stringify({ query: ingredientName }),
+                headers: {
+                    "Content-Type": "application/json; charset=UTF-8",
+                    "x-app-id": appId,
+                    "x-app-key": appKey
+                }
+            })
+            .then(response => {
+                if (!response.ok) throw new Error(`NutritionIX API Error: ${response.statusText}`);
+                return response.json();
+            })
+            .then(data => {
+                const foods = data.foods || [];
+                if (foods.length === 0) {
+                    console.warn(`No nutritional data found for ingredient: ${ingredientName}`);
+                    return;
+                }
+        
+                const specsDiv = createNode('div');
+                specsDiv.setAttribute('class', 'mx-3');
+        
+                const specsList = createNode('ul');
+                specsList.setAttribute('class', 'list-group');
+        
+                const specsTitle = createNode('li');
+                specsTitle.setAttribute('class', 'list-group-item d-flex justify-content-between align-items-center');
+                specsTitle.innerHTML = `1oz is equal to:`;
+                append(specsList, specsTitle);
+        
+                const fixedWeightInGrams = 28.35; // 1 ounce in grams
+        
+                foods.forEach(food => {
+                    const createSpecItem = (label, value, unit = '') => {
+                        const listItem = createNode('li');
+                        listItem.setAttribute('class', 'list-group-item d-flex justify-content-between align-items-center');
+                        listItem.innerHTML = `${label}: <span class="badge rounded-pill bg-secondary">${value !== null ? `${(value * fixedWeightInGrams / food.serving_weight_grams).toFixed(2)}${unit}` : 'N/A'}</span>`;
+                        return listItem;
+                    };
+        
+                    append(specsList, createSpecItem('Calories', food.nf_calories, ''));
+                    append(specsList, createSpecItem('Total Fat', food.nf_total_fat, 'g'));
+                    append(specsList, createSpecItem('Sodium', food.nf_sodium, 'mg'));
+                    append(specsList, createSpecItem('Carbohydrates', food.nf_total_carbohydrate, 'g'));
+                    append(specsList, createSpecItem('Sugars', food.nf_sugars, 'g'));
+                    append(specsList, createSpecItem('Protein', food.nf_protein, 'g'));
+                });
+        
+                append(specsDiv, specsList);
+                append(card, specsDiv);
+        
+                updateTotalNutrition(foods);
+            })
+            .catch(error => {
+                console.error(`NutritionIX API Error: ${error}`);
+        
+                const specsDiv = createNode('div');
+                specsDiv.setAttribute('class', 'mx-3');
+        
+                const specsList = createNode('ul');
+                specsList.setAttribute('class', 'list-group');
+        
+                const specsTitle = createNode('li');
+                specsTitle.setAttribute('class', 'list-group-item d-flex justify-content-between align-items-center');
+                specsTitle.innerHTML = `1oz is equal to:`;
+        
+                append(specsList, specsTitle);
+        
+                ['Calories', 'Total Fat', 'Sodium', 'Carbohydrates', 'Sugars', 'Protein'].forEach(label => {
+                    const listItem = createNode('li');
+                    listItem.setAttribute('class', 'list-group-item d-flex justify-content-between align-items-center');
+                    listItem.innerHTML = `${label}: <span class="badge rounded-pill bg-secondary">N/A</span>`;
+                    append(specsList, listItem);
+                });
+        
+                append(specsDiv, specsList);
+                append(card, specsDiv);
+            });
         }
-    })
-    .then(response => {
-        if (!response.ok) throw new Error(`NutritionIX API Error: ${response.statusText}`);
-        return response.json();
-    })
-    .then(data => {
-        const foods = data.foods || [];
-        if (foods.length === 0) {
-            console.warn(`No nutritional data found for ingredient: ${ingredientName}`);
-            return;
-        }
-
-        const specsDiv = document.createElement('div');
-        specsDiv.classList.add('mx-3');
-        const specsList = document.createElement('ul');
-        specsList.classList.add('list-group');
-        const specsTitle = document.createElement('li');
-        specsTitle.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
-        specsTitle.innerHTML = `1oz is equal to:`;
-
-        specsList.appendChild(specsTitle);
-        foods.forEach(food => {
+        
+        function updateTotalNutrition(foods) {
             const fixedWeightInGrams = 28.35; // 1 ounce in grams
-            const createSpecItem = (label, value, unit = '') => {
-                const listItem = document.createElement('li');
-                listItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
-                listItem.innerHTML = `${label}: <span class="badge rounded-pill bg-secondary">${value !== null ? `${value.toFixed(2)}${unit}` : 'N/A'}</span>`;
-                return listItem;
-            };
-            specsList.appendChild(createSpecItem('Calories', food.nf_calories * fixedWeightInGrams / food.serving_weight_grams));
-            specsList.appendChild(createSpecItem('Total Fat', food.nf_total_fat * fixedWeightInGrams / food.serving_weight_grams, 'g'));
-            specsList.appendChild(createSpecItem('Sodium', food.nf_sodium * fixedWeightInGrams / food.serving_weight_grams, 'mg'));
-            specsList.appendChild(createSpecItem('Carbohydrates', food.nf_total_carbohydrate * fixedWeightInGrams / food.serving_weight_grams, 'g'));
-            specsList.appendChild(createSpecItem('Sugars', food.nf_sugars * fixedWeightInGrams / food.serving_weight_grams, 'g'));
-            specsList.appendChild(createSpecItem('Protein', food.nf_protein * fixedWeightInGrams / food.serving_weight_grams, 'g'));
-        });
-
-        specsDiv.appendChild(specsList);
-        card.appendChild(specsDiv);
-
-        updateTotalNutrition(foods);
-    })
-    .catch(error => console.error(`NutritionIX API Error: ${error}`));
-}
-
-// Update total nutrition values
-function updateTotalNutrition(foods) {
-    const fixedWeightInGrams = 28.35; // 1 ounce in grams
-    total_caloriesValue += foods.reduce((sum, food) => sum + food.nf_calories * fixedWeightInGrams / food.serving_weight_grams, 0);
-    total_fatValue += foods.reduce((sum, food) => sum + food.nf_total_fat * fixedWeightInGrams / food.serving_weight_grams, 0);
-    total_sodiumValue += foods.reduce((sum, food) => sum + food.nf_sodium * fixedWeightInGrams / food.serving_weight_grams, 0);
-    total_carbsValue += foods.reduce((sum, food) => sum + food.nf_total_carbohydrate * fixedWeightInGrams / food.serving_weight_grams, 0);
-    total_sugarsValue += foods.reduce((sum, food) => sum + food.nf_sugars * fixedWeightInGrams / food.serving_weight_grams, 0);
-    total_proteinValue += foods.reduce((sum, food) => sum + food.nf_protein * fixedWeightInGrams / food.serving_weight_grams, 0);
-
-}
+        
+            total_caloriesValue = foods.reduce((sum, food) => sum + ((food.nf_calories || 0) * fixedWeightInGrams / food.serving_weight_grams), 0);
+            total_fatValue = foods.reduce((sum, food) => sum + ((food.nf_total_fat || 0) * fixedWeightInGrams / food.serving_weight_grams), 0);
+            total_sodiumValue = foods.reduce((sum, food) => sum + ((food.nf_sodium || 0) * fixedWeightInGrams / food.serving_weight_grams), 0);
+            total_carbsValue = foods.reduce((sum, food) => sum + ((food.nf_total_carbohydrate || 0) * fixedWeightInGrams / food.serving_weight_grams), 0);
+            total_sugarsValue = foods.reduce((sum, food) => sum + ((food.nf_sugars || 0) * fixedWeightInGrams / food.serving_weight_grams), 0);
+            total_proteinValue = foods.reduce((sum, food) => sum + ((food.nf_protein || 0) * fixedWeightInGrams / food.serving_weight_grams), 0);
+        
+            const totalNutritionHTML = `
+                <h4>Total Nutritional Values:</h4>
+                <ul class="list-group list-group-flush bg-transparent">
+                    <li class="list-group-item bg-transparent">Calories: ${total_caloriesValue.toFixed(2)}</li>
+                    <li class="list-group-item bg-transparent">Total Fat: ${total_fatValue.toFixed(2)}g</li>
+                    <li class="list-group-item bg-transparent">Sodium: ${total_sodiumValue.toFixed(2)}mg</li>
+                    <li class="list-group-item bg-transparent">Total Carbohydrates: ${total_carbsValue.toFixed(2)}g</li>
+                    <li class="list-group-item bg-transparent">Sugars: ${total_sugarsValue.toFixed(2)}g</li>
+                    <li class="list-group-item bg-transparent">Protein: ${total_proteinValue.toFixed(2)}g</li>
+                </ul>
+                <br>
+                <h6><em><strong>Per 1 oz of each ingredient measured</strong></em></h6>
+            `;
+        
+            const totalContainer = document.getElementById('total-nutrition');
+            totalContainer.innerHTML = totalNutritionHTML;
+        }
+        
+        function createSpecItem(label, value, unit) {
+            const listItem = createNode('li');
+            listItem.setAttribute('class', 'list-group-item d-flex justify-content-between align-items-center');
+            listItem.innerHTML = `${label}: <span class="badge rounded-pill bg-secondary">${value} ${unit}</span>`;
+            return listItem;    
+        }

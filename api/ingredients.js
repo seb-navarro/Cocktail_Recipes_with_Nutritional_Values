@@ -10,7 +10,6 @@ const appId2 = "b7b5026c"; const appKey2 = "41069590f031cbec6925acafe29900ad";
 const appId3 = "cca115e6"; const appKey3 = "ca8dbac9a61a187ee8dedb2446908fd1";
 const appId4 = "4a2d0dc2"; const appKey4 = "26b4cab3689702ce7e83c917ef91d81d";
 const appId5 = "8c9d2710"; const appKey5 = "7a7ac4b8da55cd1a3a1d35f2653a2e88";
-const appId6 = "fca5b988"; const appKey6 = "111efaf6f3a0e70dd846d29e0e16875d";
 
 // Initializing/Resetting variables
 let total_caloriesValue = 0,
@@ -85,7 +84,7 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
                 //console.log(meassurement_check)
                 
 
-                if(meassurement_check.includes("oz") || meassurement_check.includes("cl") || meassurement_check.includes("cup") || meassurement_check.includes("cups") || meassurement_check.includes("tbspn") || meassurement_check.includes("tsp") || meassurement_check.includes("tablespoons") || meassurement_check.includes("dl")){
+                if(meassurement_check.includes("oz") || meassurement_check.includes("cl") || meassurement_check.includes("cup") || meassurement_check.includes("cups") || meassurement_check.includes("tbspn") || meassurement_check.includes("tsp") || meassurement_check.includes("tablespoons") || meassurement_check.includes("dl") || meassurement_check.includes("shot") || meassurement_check.includes("shots")){
                     valid_meassurement = true;
                 }
                 //console.log(valid_meassurement)
@@ -100,7 +99,10 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
                 // Triggering API call for nutritionIX with redundancies
 
 
-                listIngredientSpecs(nutritionIxURL, ingredient, appId6, appKey6, card, valid_meassurement);
+                listIngredientSpecs(nutritionIxURL, ingredient, appId5, appKey5, card, valid_meassurement);
+
+                
+
                 // Collate all contents for 'ingredients' div
                 ingredientsContainer.appendChild(card);
             });
@@ -173,21 +175,24 @@ function listIngredientSpecs(url, ingredient, appId, appKey, card, valid_meassur
                 sugars_span.setAttribute('class', 'badge text-bg-secondary rounded-pill');
                 protein_span.setAttribute('class', 'badge text-bg-secondary rounded-pill');
 
-                // Keeping track of sum values for each ingredient's spec
-                total_caloriesValue += Number(food.nf_calories);
-                total_fatValue += Number(food.nf_total_fat);
-                total_sodiumValue += Number(food.nf_sodium);
-                total_carbsValue += Number(food.nf_total_carbohydrate);
-                total_sugarsValue += Number(food.nf_sugars);
-                total_proteinValue += Number(food.nf_protein);
-
                 // Calculating 'conversion_rate' used in getting ounce equivalent values
                 serving_amount = food.serving_weight_grams;
                 conversion_rate = 28.35 / serving_amount;
                 // console.log(conversion_rate)    
+
+
+
                 
 
                 if(valid_meassurement === true){
+                    // Keeping track of sum values for each ingredient's spec
+                    total_caloriesValue += Number(food.nf_calories) * conversion_rate;
+                    total_fatValue += Number(food.nf_total_fat) * conversion_rate;
+                    total_sodiumValue += Number(food.nf_sodium) * conversion_rate;
+                    total_carbsValue += Number(food.nf_total_carbohydrate) * conversion_rate;
+                    total_sugarsValue += Number(food.nf_sugars) * conversion_rate;
+                    total_proteinValue += Number(food.nf_protein) * conversion_rate;
+
                     calories_span.innerHTML = (food.nf_calories * conversion_rate).toFixed(2);
                     fat_span.innerHTML = (food.nf_total_fat * conversion_rate).toFixed(2) + 'g';
                     sodium_span.innerHTML = (food.nf_sodium * conversion_rate).toFixed(2) + 'g';
@@ -238,7 +243,7 @@ function listIngredientSpecs(url, ingredient, appId, appKey, card, valid_meassur
             const totalContainer = document.getElementById('total-nutrition');
             totalContainer.innerHTML = `
 
-                <h4>Total Nutrition Values (Estimate):</h4>
+                <h4>Cocktail Nutritional Values:</h4>
                 <ul class="list-group list-group-flush bg-transparent">
                     <li class="list-group-item bg-transparent">Calories: ${total_caloriesValue.toFixed(2)}</li>
                     <li class="list-group-item bg-transparent">Total Fat: ${total_fatValue.toFixed(2)}g</li>
@@ -247,6 +252,8 @@ function listIngredientSpecs(url, ingredient, appId, appKey, card, valid_meassur
                     <li class="list-group-item bg-transparent">Sugars: ${total_sugarsValue.toFixed(2)}g</li>
                     <li class="list-group-item bg-transparent">Protein: ${total_proteinValue.toFixed(2)}g</li>
                 </ul>
+                <br>
+                <h6><em><strong>Per 1 oz of each ingredient measured</strong></em></h6>
 
             `;
         })

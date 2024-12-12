@@ -42,16 +42,18 @@ fetch(`${ingredientURL}${ingredientName}`)
         if (!response.ok) throw new Error(`Error fetching ingredient data: ${response.statusText}`);
         return response.json();
     })
+    // Process and display ingredient data
     .then(data => {
         const results = data.ingredients || [];
         resultsContainer.innerHTML = ''; // Clear existing content
 
+        // Check if any data is returned
         if (results.length === 0) {
             resultsContainer.innerHTML = `<p>No information found for "${ingredientName}".</p>`;
             return;
         }
         console.log(document.getElementById('total-nutrition'));
-
+// Create and display ingredient cards
         results.forEach(ingredient => {
             // Create and populate ingredient card
             const ingredientCard = document.createElement('div');
@@ -65,6 +67,7 @@ fetch(`${ingredientURL}${ingredientName}`)
                     </div>
                 </div>
             `;
+            // Add ingredient card to results container
             resultsContainer.appendChild(ingredientCard);
 
             // Add ingredient description
@@ -79,20 +82,23 @@ fetch(`${ingredientURL}${ingredientName}`)
             // Fetch related cocktails
             fetch(`${relatedCocktailURL}${ingredientName}`)
                 .then(response => {
+                    // Check for errors
                     if (!response.ok) throw new Error(`Error fetching related cocktails: ${response.statusText}`);
                     return response.json();
                 })
                 .then(data => {
+                    // Process and display related cocktails
                     const cocktails = data.drinks || [];
                     relatedCocktailsContainer.innerHTML = '';
-
+                    // Check if any data is returned
                     if (cocktails.length === 0) {
                         relatedCocktailsContainer.innerHTML = `<p>No cocktails found for "${ingredientName}".</p>`;
                         return;
                     }
-
+                    // Create and display related cocktail cards
                     cocktails.forEach(drink => {
                         const card = document.createElement('div');
+                        // Add classes and styles
                         card.classList.add('card', 'col-md-4', 'text-dark', 'mb-4', 'p-5', 'g-3', 'd-flex', 'justify-content-center', 'align-items-center');
                         card.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
                         card.innerHTML = `
@@ -102,15 +108,18 @@ fetch(`${ingredientURL}${ingredientName}`)
                                 <a href="ingredients.html?cocktail=${drink.idDrink}" class="btn btn-outline-secondary btn-md my-2">More Info</a>
                             </div>
                         `;
+                        // Add related cocktail card to related cocktails container
                         relatedCocktailsContainer.appendChild(card);
                     });
                 })
+                // Handle errors
                 .catch(error => console.error(`Error fetching related cocktails: ${error}`));
 
         });
+        // Fetch nutritional data
         listIngredientSpecs(nutritionIxURL, ingredientName, appId7, appKey7, totalNutritionContainer);
     })
-        
+        // Handle errors and display error message
         function listIngredientSpecs(url, ingredientName, appId, appKey, card) {
             fetch(url, {
                 method: "POST",
@@ -125,13 +134,14 @@ fetch(`${ingredientURL}${ingredientName}`)
                 if (!response.ok) throw new Error(`NutritionIX API Error: ${response.statusText}`);
                 return response.json();
             })
+            // Process and display nutritional data
             .then(data => {
                 const foods = data.foods || [];
                 if (foods.length === 0) {
                     console.warn(`No nutritional data found for ingredient: ${ingredientName}`);
                     return;
                 }
-        
+                // Create and display card
                 const specsDiv = createNode('div');
                 specsDiv.setAttribute('class', 'mx-3');
         
@@ -139,20 +149,22 @@ fetch(`${ingredientURL}${ingredientName}`)
                 specsList.setAttribute('class', 'list-group');
         
                 const specsTitle = createNode('li');
+                // Add classes and styles
                 specsTitle.setAttribute('class', 'list-group-item d-flex justify-content-between align-items-center');
                 specsTitle.innerHTML = `1oz is equal to:`;
                 append(specsList, specsTitle);
-        
+                // Convert grams to ounces
                 const fixedWeightInGrams = 28.35; // 1 ounce in grams
-        
+                // Create and display nutritional data
                 foods.forEach(food => {
+                    // Create and return HTML element
                     const createSpecItem = (label, value, unit = '') => {
                         const listItem = createNode('li');
                         listItem.setAttribute('class', 'list-group-item d-flex justify-content-between align-items-center');
                         listItem.innerHTML = `${label}: <span class="badge rounded-pill bg-secondary">${value !== null ? `${(value * fixedWeightInGrams / food.serving_weight_grams).toFixed(2)}${unit}` : 'N/A'}</span>`;
                         return listItem;
                     };
-        
+                    // Append nutritional data
                     append(specsList, createSpecItem('Calories', food.nf_calories, ''));
                     append(specsList, createSpecItem('Total Fat', food.nf_total_fat, 'g'));
                     append(specsList, createSpecItem('Sodium', food.nf_sodium, 'mg'));
@@ -160,49 +172,49 @@ fetch(`${ingredientURL}${ingredientName}`)
                     append(specsList, createSpecItem('Sugars', food.nf_sugars, 'g'));
                     append(specsList, createSpecItem('Protein', food.nf_protein, 'g'));
                 });
-        
+                // Append to card
                 append(specsDiv, specsList);
                 append(card, specsDiv);
-        
+                // Update total nutrition
                 updateTotalNutrition(foods);
             })
             .catch(error => {
                 console.error(`NutritionIX API Error: ${error}`);
-        
+                // Create and display card
                 const specsDiv = createNode('div');
                 specsDiv.setAttribute('class', 'mx-3');
-        
+                
                 const specsList = createNode('ul');
                 specsList.setAttribute('class', 'list-group');
         
                 const specsTitle = createNode('li');
                 specsTitle.setAttribute('class', 'list-group-item d-flex justify-content-between align-items-center');
                 specsTitle.innerHTML = `1oz is equal to:`;
-        
+                // Append nutritional data
                 append(specsList, specsTitle);
-        
+                // Create and display nutritional data
                 ['Calories', 'Total Fat', 'Sodium', 'Carbohydrates', 'Sugars', 'Protein'].forEach(label => {
                     const listItem = createNode('li');
                     listItem.setAttribute('class', 'list-group-item d-flex justify-content-between align-items-center');
                     listItem.innerHTML = `${label}: <span class="badge rounded-pill bg-secondary">N/A</span>`;
                     append(specsList, listItem);
                 });
-        
+                // Append to card
                 append(specsDiv, specsList);
                 append(card, specsDiv);
             });
         }
-        
+        // Update total nutrition
         function updateTotalNutrition(foods) {
             const fixedWeightInGrams = 28.35; // 1 ounce in grams
-        
+            // Calculate total nutrition
             total_caloriesValue = foods.reduce((sum, food) => sum + ((food.nf_calories || 0) * fixedWeightInGrams / food.serving_weight_grams), 0);
             total_fatValue = foods.reduce((sum, food) => sum + ((food.nf_total_fat || 0) * fixedWeightInGrams / food.serving_weight_grams), 0);
             total_sodiumValue = foods.reduce((sum, food) => sum + ((food.nf_sodium || 0) * fixedWeightInGrams / food.serving_weight_grams), 0);
             total_carbsValue = foods.reduce((sum, food) => sum + ((food.nf_total_carbohydrate || 0) * fixedWeightInGrams / food.serving_weight_grams), 0);
             total_sugarsValue = foods.reduce((sum, food) => sum + ((food.nf_sugars || 0) * fixedWeightInGrams / food.serving_weight_grams), 0);
             total_proteinValue = foods.reduce((sum, food) => sum + ((food.nf_protein || 0) * fixedWeightInGrams / food.serving_weight_grams), 0);
-        
+            // Display total nutrition
             const totalNutritionHTML = `
                 <h4>Total Nutritional Values:</h4>
                 <ul class="list-group list-group-flush bg-transparent">
@@ -216,11 +228,11 @@ fetch(`${ingredientURL}${ingredientName}`)
                 <h6><em><strong>Per 1 oz measured</strong></em></h6>
                 
             `;
-        
+            // Update total nutrition
             const totalContainer = document.getElementById('total-nutrition');
             totalContainer.innerHTML = totalNutritionHTML;
         }
-        
+        // Create and return HTML element
         function createSpecItem(label, value, unit) {
             const listItem = createNode('li');
             listItem.setAttribute('class', 'list-group-item d-flex justify-content-between align-items-center');

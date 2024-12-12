@@ -78,19 +78,20 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
                 const measureText = ingredient === 'Salt'
                     ? 'Garnish'
 
+                    // Checks for the measures of the ingredient in the cocktail
                     : drink[`strMeasure${ingredientsArr.indexOf(ingredient) + 1}`] || '';
 
+                // Creates an array of items used in the measurement of the ingredient and splits by all possible separators.
                 const meassurement_check = measureText.split(" ").join(",").split("\r").join(",").split("\n").join(",").split(",");
 
 
                 let valid_meassurement = false;
-                //console.log(meassurement_check)
 
 
+                // Checks if a valid meassurement is in the array created from the meassurement string.
                 if (meassurement_check.includes("oz") || meassurement_check.includes("cl") || meassurement_check.includes("cup") || meassurement_check.includes("cups") || meassurement_check.includes("tbspn") || meassurement_check.includes("tsp") || meassurement_check.includes("tablespoons") || meassurement_check.includes("dl") || meassurement_check.includes("shot") || meassurement_check.includes("shots") || meassurement_check.includes("ml")) {
                     valid_meassurement = true;
                 }
-                //console.log(valid_meassurement)
 
                 // Building card and card contents
                 card.innerHTML = `
@@ -99,10 +100,9 @@ fetch(`${cocktailIngredientURL}${cocktailId}`)
                     <h5 class="d-flex justify-content-center align-items-center">${measureText}</h5>
                 `;
 
-                // Triggering API call for nutritionIX with redundancies
-
-
-                listIngredientSpecs(nutritionIxURL, ingredient, appId7, appKey7, card, valid_meassurement);
+                
+                // Function that adds nutritional values to the ingredient using the NutritionIX API
+                listIngredientSpecs(nutritionIxURL, ingredient, appId1, appKey1, card, valid_meassurement);
 
 
 
@@ -180,13 +180,11 @@ function listIngredientSpecs(url, ingredient, appId, appKey, card, valid_meassur
 
                 // Calculating 'conversion_rate' used in getting ounce equivalent values
                 serving_amount = food.serving_weight_grams;
-                conversion_rate = 28.35 / serving_amount;
-                // console.log(conversion_rate)    
+                conversion_rate = 28.35 / serving_amount;    
 
 
-
-
-
+                // If a valid unit of meassurement is used then the nutritional info is deisplayed and the totals are added to the total for the cocktail.
+                // There was an issue with a bourbon whisky called 'Wild Turkey' displaying nutritional info for a cooked turkey so we accounted for that specific instance.
                 if (valid_meassurement === true && food.food_name != 'turkey') {
                     // Keeping track of sum values for each ingredient's spec
                     total_caloriesValue += Number(food.nf_calories) * conversion_rate;

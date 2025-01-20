@@ -4,6 +4,9 @@
 
 https://github.com/user-attachments/assets/e7e6874e-fbc4-46a6-8d71-02b43a7f92f2
 
+# Application Link Below:
+
+https://universityofdundee-computing.github.io/cw2-web-application-development-project-stac/cocktails.html
 
 # Calculation for nutritional values from NutrionIX into CocktailDB amounts:
 
